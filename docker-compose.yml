@@ -1,0 +1,45 @@
+# From:
+# - https://danielabaron.me/blog/rails-postgres-docker/
+# - https://www.digitalocean.com/community/tutorials/containerizing-a-ruby-on-rails-application-for-development-with-docker-compose-es
+# - https://medium.com/@luismiguel.cabezas/docker-para-programadores-rails-parte-1-51b7313cba36
+# - https://medium.com/@luismiguel.cabezas/docker-para-programadores-rails-parte-2-2686d12f23ef
+# - https://medium.com/simform-engineering/dockerize-your-rails-7-app-3223cc851129
+services:
+  postgres:
+    image: postgres:9.6 # Construir desde una imagen específica de PostgreSQL
+    volumes:
+      # Volumen nombrado para persistir la base de datos. Formato: "named_volume:path/in/container"
+      - db_pg_data:/var/lib/postgresql/data
+      # Montaje en host para iniciar una sola vez. Formato: "./path/on/host:/path/in/container"
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      # Mapea el puerto por defecto de postgres a otro puerto en el host .Formato: "host:container"
+      - "5434:5432"
+    env_file: .env
+    environment:
+      # Define la contraseña del superuser de PostgreSQL
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  rails:
+    build: . # Construye en base al Dockerfile encontrado en el directorio donde se ejecuta docker-compose up
+    volumes:
+      # Montaje bind. Monta el código de Rails del host en el directorio /app del contenedor.
+      # Esto permite que los cambios de código en el host se reflejen de inmediato en el contenedor.
+      - .:/app
+    env_file: .env
+    environment: # Define variables de entorno que serán utilizados dentro de la aplicación Rails
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_PORT=5432
+      - DATABASE_HOST=postgres # Notar que el host es postgres en referencia al servicio definido aquí
+                               # Si se decea ejecutar la aplicacion directamente en el host y no en un contanedor el host
+                               # debe ser localhost, aunque esto es un depende.
+    ports:
+      # Asigna el puerto 3000 del host al puerto 3000 del contenedor
+      - "3000:3000"
+    depends_on:
+      - postgres  # Referencia al servicio postgres definido mas arriba, esto indica que se va a crear el servicio rails
+                  # luego del servicio postgres, aunque esto no asegura que postgres ya esté listo para ser usado por rails.
+
+volumes:
+  db_pg_data:
