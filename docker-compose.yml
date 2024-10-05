@@ -4,6 +4,8 @@
 # - https://medium.com/@luismiguel.cabezas/docker-para-programadores-rails-parte-1-51b7313cba36
 # - https://medium.com/@luismiguel.cabezas/docker-para-programadores-rails-parte-2-2686d12f23ef
 # - https://medium.com/simform-engineering/dockerize-your-rails-7-app-3223cc851129
+
+# Los cambios en este archivo no requieren regenerar la imagen pero si apagar y levantar de nuevo el contenedor
 services:
   postgres:
     image: postgres:9.6 # Construir desde una imagen específica de PostgreSQL
@@ -22,10 +24,23 @@ services:
 
   rails:
     build: . # Construye en base al Dockerfile encontrado en el directorio donde se ejecuta docker-compose up
+    # Para que command funciones exec "$@" debe existir en el entrypoint o bien no se debe hacer referencia al entrypoint en el Dockerfile
+    # Comando para depurar, comentar la siguiente línea si no se quiere depurar, por lo que se ejecutará el CMD del Dockerfile
+    # command: rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- script/rails s -b 0.0.0.0
+    # Las siguientes líneas están a modo de ejemplo, actualmente en el Dockerfile ya está especificado con el comando CMD
+    # command: rake db:migrate && bundle exec rails s -b 0.0.0.0 # Este formato permite ejecutar un solo comando
+    # command: bash -c "rake db:migrate && rails s -p 3000 -b '0.0.0.0'" # Este formato permite ejecutar más de un comando dentro de las comillas dobles
     volumes:
       # Montaje bind. Monta el código de Rails del host en el directorio /app del contenedor.
       # Esto permite que los cambios de código en el host se reflejen de inmediato en el contenedor.
       - .:/app
+      - gem_cache:/usr/local/bundle/gems # Guarda las gemas en un volumen. Se debe eliminar el volumen al modificar las gemas
+      # Para que no se vuelvan a instalar las gema al borrar la imagen, es importante que en el Dockerfile se copie primero el Gemfile
+      # y se instalen las gemas antes de copiar el resto del proyecto
+    # Las siguientes lineas permiten interactuar con el contenedor levantado usando docker-compose exec rails bash
+    # Aunque aún sin tenerlos habilitados se puede interactuar, todavía no comprendo la diferencia
+    # stdin_open: true
+    # tty: true
     env_file: .env
     environment: # Define variables de entorno que serán utilizados dentro de la aplicación Rails
       - DATABASE_USER=${DATABASE_USER}
@@ -35,11 +50,13 @@ services:
                                # Si se decea ejecutar la aplicacion directamente en el host y no en un contanedor el host
                                # debe ser localhost, aunque esto es un depende.
     ports:
-      # Asigna el puerto 3000 del host al puerto 3000 del contenedor
-      - "3000:3000"
+      - "3000:3000" # Asigna el puerto 3000 del host al puerto 3000 del contenedor
+      - "1234:1234" # Puerto para depuración
+
     depends_on:
       - postgres  # Referencia al servicio postgres definido mas arriba, esto indica que se va a crear el servicio rails
                   # luego del servicio postgres, aunque esto no asegura que postgres ya esté listo para ser usado por rails.
 
 volumes:
   db_pg_data:
+  gem_cache:
