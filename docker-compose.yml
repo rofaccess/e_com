@@ -62,10 +62,13 @@ services:
     build: .
     # Ejecutar tests: docker-compose run test
     # command: bash -c "RAILS_ENV=test bundle exec rspec"
-    # Depurar tests: docker-compose up test, importate usar up test para que se realice el mapeo de puertos y se pueda conectar el depurador
-    command: rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- bin/rake spec
+    # Depurar tests: docker-compose up test
+    # Importante usar up test para que se realice el mapeo de puertos y se pueda conectar el depurador
+    # bin/rake spec funciona dentro del contenedor pero si se usa aquí se genera un subroceso que con el que el depurador no se puede conectar
+    command: rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- bin/rspec spec/controllers/home_controller_spec.rb
+    # command: rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- bin/rake spec
     # Depurar tests (alternativo): docker-compose up test
-    # command: bash -c "rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- RAILS_ENV=test bundle exec rspec"
+    # command: bash -c "rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- bin/rspec spec/controllers/home_controller_spec.rb"
     volumes:
       - .:/app
       - gem_cache:/usr/local/bundle/gems
