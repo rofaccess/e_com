@@ -11,11 +11,19 @@ La configuración de Docker Compose fue probada en la distribución ArchLinux.
 
 Iniciar la aplicación
 ````sh
-$ docker-compose up
+$ docker-compose up dev
 ````
 Acceder a http://localhost:3000
 
-Detener la aplicación
+Ctrl + c para detener la aplicación en la Terminal.
+
+
+También se puede iniciar la aplicación en segundo plano
+````sh
+$ docker-compose up dev -d
+````
+
+En este caso la aplicación se detiene con
 ````sh
 $ docker-compose down
 ````
@@ -68,7 +76,7 @@ Agregar una configuración de depuración remota en Rubymine
 
 Iniciar la aplicación desde la terminal
 ````sh
-$ docker-compose up
+$ docker-compose up test
 ````
 
 Ejecutar "Debug Docker Rails" en Rubymine

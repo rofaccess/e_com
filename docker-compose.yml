@@ -22,10 +22,10 @@ services:
       # Define la contraseña del superuser de PostgreSQL
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
-  rails:
+  dev:
     build: . # Construye en base al Dockerfile encontrado en el directorio donde se ejecuta docker-compose up
-    # Para que command funciones exec "$@" debe existir en el entrypoint o bien no se debe hacer referencia al entrypoint en el Dockerfile
-    # Comando para depurar, comentar la siguiente línea si no se quiere depurar, por lo que se ejecutará el CMD del Dockerfile
+    # Para que command funcione, exec "$@" debe existir en el entrypoint o bien no se debe hacer referencia al entrypoint en el Dockerfile
+    # Comando para depurar, descomentar la siguiente línea para depurar, osino se ejecutará el CMD del Dockerfile
     # command: rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- script/rails s -b 0.0.0.0
     # Las siguientes líneas están a modo de ejemplo, actualmente en el Dockerfile ya está especificado con el comando CMD
     # command: rake db:migrate && bundle exec rails s -b 0.0.0.0 # Este formato permite ejecutar un solo comando
@@ -37,12 +37,9 @@ services:
       - gem_cache:/usr/local/bundle/gems # Guarda las gemas en un volumen. Se debe eliminar el volumen al modificar las gemas
       # Para que no se vuelvan a instalar las gema al borrar la imagen, es importante que en el Dockerfile se copie primero el Gemfile
       # y se instalen las gemas antes de copiar el resto del proyecto
-    # Las siguientes lineas permiten interactuar con el contenedor levantado usando docker-compose exec rails bash
-    # Aunque aún sin tenerlos habilitados se puede interactuar, todavía no comprendo la diferencia
-    # stdin_open: true
-    # tty: true
     env_file: .env
     environment: # Define variables de entorno que serán utilizados dentro de la aplicación Rails
+      - RAILS_ENV=development
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - DATABASE_PORT=5432
@@ -61,21 +58,22 @@ services:
   test:
     build: .
     # Ejecutar tests: docker-compose run test
+    command: bundle exec rspec
+    # Alternativo: Se ejecuta con bash y se la pasa la variable de entorno, lo cual es innecesario
     # command: bash -c "RAILS_ENV=test bundle exec rspec"
     # Depurar tests: docker-compose up test
     # Importante usar up test para que se realice el mapeo de puertos y se pueda conectar el depurador
     # bin/rake spec funciona dentro del contenedor pero si se usa aquí se genera un subroceso que con el que el depurador no se puede conectar
-    command: rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- bin/rspec spec/controllers/home_controller_spec.rb
+    # command: rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- bin/rspec spec/controllers/home_controller_spec.rb
     # command: rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- bin/rake spec
     # Depurar tests (alternativo): docker-compose up test
     # command: bash -c "rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- bin/rspec spec/controllers/home_controller_spec.rb"
     volumes:
       - .:/app
       - gem_cache:/usr/local/bundle/gems
-    #stdin_open: true
-    #tty: true
     env_file: .env
     environment:
+      - RAILS_ENV=test
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - DATABASE_PORT=5432

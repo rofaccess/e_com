@@ -31,9 +31,9 @@ wait_for_db
 
 # La función wait_for_db evite que las siguientes tareas intenten acceder a la base de datos
 # antes de que postgres esté listo
-bundle exec rake db:create
-bundle exec rake db:migrate
-bundle exec rake db:seed
+bundle exec rake db:create RAILS_ENV=${RAILS_ENV}
+bundle exec rake db:migrate RAILS_ENV=${RAILS_ENV}
+bundle exec rake db:seed RAILS_ENV=${RAILS_ENV}
 
 # Cuando se tenga el Schema se puede borrar los anteriores y descomentar lo siguiente
 # bundle exec rake db:setup
