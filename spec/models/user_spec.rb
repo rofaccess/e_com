@@ -4,12 +4,7 @@ RSpec.describe User, :type => :model do
   fixtures :users
 
   subject(:user) {
-    user = User.new(name: "Bob")
-    # No se setea en new para evitar el error:
-    # ActiveModel::MassAssignmentSecurity::Error:
-    # Can't mass-assign protected attributes: email, password
-    user.email = "bob@email.com"
-    user
+    User.new(name: "Bob", email: "bob@bob.com")
   }
 
   it "save valid record" do

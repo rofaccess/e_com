@@ -9,6 +9,8 @@ class CreateProductProductCategories < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :product_product_categories, :product_id
+    add_index :product_product_categories, :product_category_id
 
     add_index :product_product_categories, [:product_id, :product_category_id],
               name: 'index_prod_prod_cat_on_prod_id_and_prod_cat_id', unique: true

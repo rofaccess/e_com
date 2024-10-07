@@ -10,5 +10,6 @@ class CreateProductCategories < ActiveRecord::Migration
     end
 
     add_index :product_categories, :name, unique: true
+    add_index :product_categories, :created_by_id
   end
 end

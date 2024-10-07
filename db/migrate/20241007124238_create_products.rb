@@ -11,5 +11,11 @@ class CreateProducts < ActiveRecord::Migration
     end
 
     add_index :products, :name, unique: true
+    add_index :products, :created_by_id
   end
 end
+
+# Obs.:
+# - Se usa la gema foreigner porque ya agrega las restricciones de clave foránea, en cambio t.references sólo crea estas
+#   restricciones a partir de Rails 4
+# - Se recomienda agregar índices a las claves foráneas para optimizar el rendimiento de consultas que utilicen join

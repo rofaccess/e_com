@@ -1,0 +1,7 @@
+one:
+  sale_number: "001"
+  sale_at: <%= Time.current %>
+  client: john
+  product: jean
+  quantity: 1
+  price: 29.99

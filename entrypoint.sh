@@ -33,7 +33,11 @@ wait_for_db
 # antes de que postgres esté listo
 bundle exec rake db:create RAILS_ENV=${RAILS_ENV}
 bundle exec rake db:migrate RAILS_ENV=${RAILS_ENV}
-bundle exec rake db:seed RAILS_ENV=${RAILS_ENV}
+
+if [ "$RAILS_ENV" != "test" ]; then
+    bundle exec rake db:seed RAILS_ENV=${RAILS_ENV}
+fi
+
 
 # Cuando se tenga el Schema se puede borrar los anteriores y descomentar lo siguiente
 # bundle exec rake db:setup
