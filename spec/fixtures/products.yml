@@ -1,0 +1,9 @@
+jean:
+  name: Jean
+  price: 20.99
+  created_by: amy
+
+short:
+  name: Short
+  price: 10.99
+  created_by: amy

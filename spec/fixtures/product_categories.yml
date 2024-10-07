@@ -1,0 +1,7 @@
+clothes:
+  name: Clothes
+  created_by: amy
+
+casual_clothes:
+  name: Casual Clothes
+  created_by: carl

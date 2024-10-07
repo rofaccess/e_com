@@ -1,0 +1,7 @@
+jean_clothes:
+  product: jean
+  product_category: clothes
+
+jean_casual_clothes:
+  product: jean
+  product_category: casual_clothes

@@ -11,6 +11,59 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20241007124359) do
+
+  create_table "clients", :force => true do |t|
+    t.string   "name",            :limit => 100, :null => false
+    t.string   "document_number", :limit => 100, :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  add_index "clients", ["name", "document_number"], :name => "index_clients_on_name_and_document_number", :unique => true
+
+  create_table "product_categories", :force => true do |t|
+    t.string   "name",          :limit => 100, :null => false
+    t.integer  "created_by_id",                :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  add_index "product_categories", ["name"], :name => "index_product_categories_on_name", :unique => true
+
+  create_table "product_product_categories", :force => true do |t|
+    t.integer  "product_id",          :null => false
+    t.integer  "product_category_id", :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "product_product_categories", ["product_id", "product_category_id"], :name => "index_prod_prod_cat_on_prod_id_and_prod_cat_id", :unique => true
+
+  create_table "products", :force => true do |t|
+    t.string   "name",          :limit => 100,                                :null => false
+    t.decimal  "price",                        :precision => 10, :scale => 2, :null => false
+    t.integer  "created_by_id",                                               :null => false
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
+  end
+
+  add_index "products", ["name"], :name => "index_products_on_name", :unique => true
+
+  create_table "users", :force => true do |t|
+    t.string   "name",       :limit => 100, :null => false
+    t.string   "email",      :limit => 100, :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+
+  add_foreign_key "product_categories", "users", name: "product_categories_created_by_id_fk", column: "created_by_id"
+
+  add_foreign_key "product_product_categories", "product_categories", name: "product_product_categories_product_category_id_fk"
+  add_foreign_key "product_product_categories", "products", name: "product_product_categories_product_id_fk"
+
+  add_foreign_key "products", "users", name: "products_created_by_id_fk", column: "created_by_id"
 
 end

@@ -58,8 +58,21 @@ $ rails s
 ````
 Acceder a http://localhost:3000
 
-# 2. Depuración
-## 2.1. Depuración Rubymine
+# 2. Testing
+## 2.1 Testing Docker
+Ejecutar los tests
+````sh
+$ docker-compose up test
+````
+
+## 2.2 Testing Local
+Ejecutar los tests
+````sh
+$ rake spec
+````
+
+# 3. Depuración
+## 3.1. Depuración Rubymine
 Habilitar el comando de depuración en docker-compose
 ````yml
 command: rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- script/rails s -b 0.0.0.0
@@ -80,4 +93,12 @@ $ docker-compose up test
 ````
 
 Ejecutar "Debug Docker Rails" en Rubymine
+
 ![img.png](doc/others/debug_docker_rails.png)
+
+# 4. Comandos Útiles
+Iniciar e ingresar al contenedor sin ejecutar rails s por defecto. Útil para resetear la base de datos.
+Con --rm el contenedor desaparece al salir del mismo.
+````sh
+$ docker-compose run --rm dev /bin/bash
+````
