@@ -66,7 +66,7 @@ command: rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- script
 ````
 
 Agregar una configuración de depuración remota en Rubymine
-![img.png](doc/ruby_remote_debug.png)
+![img.png](doc/others/ruby_remote_debug.png)
 
 - `Remote host`: Es localhost porque se expuso el puerto 1234 al host local a través en docker-compose
 - `Remote port`: El port indicado al comando rdebug-ide
@@ -80,4 +80,4 @@ $ docker-compose up test
 ````
 
 Ejecutar "Debug Docker Rails" en Rubymine
-![img.png](doc/debug_docker_rails.png)
+![img.png](doc/others/debug_docker_rails.png)
