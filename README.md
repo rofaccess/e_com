@@ -98,7 +98,18 @@ Ejecutar "Debug Docker Rails" en Rubymine
 
 # 4. Comandos Útiles
 Iniciar e ingresar al contenedor sin ejecutar rails s por defecto. Útil para resetear la base de datos.
-Con --rm el contenedor desaparece al salir del mismo.
 ````sh
-$ docker-compose run --rm dev /bin/bash
+$ docker-compose run --rm -p 3000:3000 dev /bin/bash
+````
+- `rm`: el contenedor desaparece al salir del mismo.
+- `-p 3000:3000`: expone el puerto 3000 del contenedor al puerto 3000 del host.
+
+Ejecutar todos los tests dentro del contenedor
+````sh
+$ rake spec
+````
+
+Ejecutar un archivo de tests en particular dentro del contenedor
+````sh
+$ rspec spec/controllers/products_controller_spec.rb
 ````

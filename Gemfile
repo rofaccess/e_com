@@ -74,3 +74,6 @@ gem 'bcrypt', '~> 3.1.7'
 
 # A Ruby gem to load environment variables from '.env'. https://github.com/bkeepers/dotenv/tree/v1.0.2
 gem 'dotenv-rails', '1.0.2'
+
+# A gem to automate using jQuery with Rails. https://github.com/rails/jquery-rails/tree/v3.1.5
+gem 'jquery-rails', '3.1.5'
