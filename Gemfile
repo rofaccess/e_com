@@ -77,3 +77,6 @@ gem 'dotenv-rails', '1.0.2'
 
 # A gem to automate using jQuery with Rails. https://github.com/rails/jquery-rails/tree/v3.1.5
 gem 'jquery-rails', '3.1.5'
+
+# Repository for collecting Locale data for Ruby on Rails I18n as well as other interesting, Rails related I18n stuff. https://github.com/svenfuchs/rails-i18n/tree/rails-3-x
+gem 'rails-i18n', '~> 3.0.0'

@@ -12,18 +12,37 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.label :name, class: "label" %><br />
+    <div class="control">
+      <%= f.text_field :name, class: "input" %>
+    </div>
   </div>
   <div class="field">
-    <%= f.label :price %><br />
-    <%= f.text_field :price %>
+    <%= f.label :price, class: "label" %><br />
+    <div class="control">
+      <%= f.text_field :price, class: "input" %>
+    </div>
   </div>
   <div class="field">
-    <%= f.label :created_by_id %><br />
-    <%= f.number_field :created_by_id %>
+    <%= f.label :created_by_id, class: "label" %><br />
+    <div class="control">
+      <%= f.text_field :created_by_id, class: "input" %>
+    </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="field is-grouped">
+    <div class="control">
+      <%= link_to '<- Back', products_path, class: "button" %>
+    </div>
+
+    <% if @product.id.present? %>
+      <div class="control">
+        <%= link_to 'Show', @product, class: "button" %>
+      </div>
+    <% end %>
+
+    <div class="control">
+      <%= f.submit :class => 'button is-primary' %>
+    </div>
   </div>
 <% end %>

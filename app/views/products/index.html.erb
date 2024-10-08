@@ -1,27 +1,34 @@
-<h1>Listing products</h1>
+<%= link_to 'New Product', new_product_path, class: "button is-primary" %>
+<hr>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Price</th>
-    <th>Created by</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="table-container">
+  <table class="table is-fullwidth">
+    <tr>
+      <th>Name</th>
+      <th class="has-text-right">Price</th>
+      <th>Created by</th>
+      <th></th>
+    </tr>
 
-<% @products.each do |product| %>
-  <tr>
-    <td><%= product.name %></td>
-    <td><%= product.price %></td>
-    <td><%= product.created_by_id %></td>
-    <td><%= link_to 'Show', product %></td>
-    <td><%= link_to 'Edit', edit_product_path(product) %></td>
-    <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Product', new_product_path %>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td class="has-text-right"><%= product.price %></td>
+        <td><%= product.created_by_id %></td>
+        <td class="has-text-right">
+          <div class="field is-grouped is-pulled-right">
+            <p class="control">
+              <%= link_to 'Show', product, class: "button is-small" %>
+            </p>
+            <p class="control">
+              <%= link_to 'Edit', edit_product_path(product), class: "button is-small" %>
+            </p>
+            <p class="control">
+              <%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' }, class: "button is-danger is-small" %>
+            </p>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

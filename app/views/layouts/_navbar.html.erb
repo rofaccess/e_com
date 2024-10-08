@@ -1,0 +1,21 @@
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/">
+      <%= image_tag('ecom_logo.svg', alt: 'ECom') %>
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <%= link_to t('.home'), root_path, class: "navbar-item" %>
+      <%= link_to t('.products'), products_path, class: "navbar-item" %>
+      <%= link_to t('.product_categories'), "#", class: "navbar-item" %>
+    </div>
+  </div>
+</nav>
