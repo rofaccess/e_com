@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20241009005524) do
+ActiveRecord::Schema.define(:version => 20241009200948) do
 
   create_table "clients", :force => true do |t|
     t.string   "name",            :limit => 100, :null => false
@@ -44,12 +44,16 @@ ActiveRecord::Schema.define(:version => 20241009005524) do
   add_index "product_product_categories", ["product_id"], :name => "index_product_product_categories_on_product_id"
 
   create_table "products", :force => true do |t|
-    t.string   "name",          :limit => 100,                                :null => false
-    t.decimal  "price",                        :precision => 10, :scale => 2, :null => false
-    t.integer  "created_by_id",                                               :null => false
+    t.string   "name",               :limit => 100,                                :null => false
+    t.decimal  "price",                             :precision => 10, :scale => 2, :null => false
+    t.integer  "created_by_id",                                                    :null => false
     t.datetime "deleted_at"
-    t.datetime "created_at",                                                  :null => false
-    t.datetime "updated_at",                                                  :null => false
+    t.datetime "created_at",                                                       :null => false
+    t.datetime "updated_at",                                                       :null => false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "products", ["created_by_id"], :name => "index_products_on_created_by_id"

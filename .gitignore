@@ -18,3 +18,5 @@ coverage/
 doc/*.bak
 
 brakeman_results.html
+
+public/system
