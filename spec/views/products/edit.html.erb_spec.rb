@@ -1,14 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "products/edit", :type => :view do
-  fixtures :users
+  fixtures :products
 
   before(:each) do
-    @product = assign(:product, Product.create!(
-      :name => "MyString",
-      :price => "9.99",
-      :created_by_id => users(:amy).id
-    ))
+    @product = assign(:product, products(:jean))
   end
 
   it "renders the edit product form" do

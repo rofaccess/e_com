@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /products
   # GET /products.json
   def index
@@ -40,7 +42,8 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
-    @product = Product.new(params[:product])
+    @product = Product.new(product_params)
+    @product.created_by_id = current_user.id
 
     respond_to do |format|
       if @product.save
@@ -59,7 +62,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
 
     respond_to do |format|
-      if @product.update_attributes(params[:product])
+      if @product.update_attributes(product_params)
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { head :no_content }
       else
@@ -79,5 +82,13 @@ class ProductsController < ApplicationController
       format.html { redirect_to products_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+  # Using a private method to encapsulate the permissible parameters is just a good pattern
+  # since you'll be able to reuse the same permit list between create and update. Also, you
+  # can specialize this method with per-user checking of permissible attributes.
+  def product_params
+    params.require(:product).permit(:name, :price)
   end
 end

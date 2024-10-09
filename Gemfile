@@ -80,3 +80,9 @@ gem 'jquery-rails', '3.1.5'
 
 # Repository for collecting Locale data for Ruby on Rails I18n as well as other interesting, Rails related I18n stuff. https://github.com/svenfuchs/rails-i18n/tree/rails-3-x
 gem 'rails-i18n', '~> 3.0.0'
+
+# Taint and required checking for Action Pack and enforcement in Active Model. https://github.com/rails/strong_parameters
+gem 'strong_parameters', '0.2.3'
+
+# Flexible authentication solution for Rails with Warden. https://github.com/heartcombo/devise/tree/v3.5.10
+gem 'devise', '3.5.10'

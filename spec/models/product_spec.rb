@@ -4,7 +4,9 @@ RSpec.describe Product, :type => :model do
   fixtures :users, :products
 
   subject(:product) {
-    Product.new(name: "T-shirt", price: 9.99, created_by_id: users(:amy).id)
+    product = Product.new(name: "T-shirt", price: 9.99)
+    product.created_by_id = users(:amy).id
+    product
   }
 
   it "save valid record" do

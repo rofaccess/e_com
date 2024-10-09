@@ -5,3 +5,8 @@ amy:
 carl:
   name: Carl
   email: carl@email.com
+
+admin:
+  name: Admin
+  email: admin@email.com
+  encrypted_password: "$2a$10$Nmf4xxKx/7veUL3Q5BDxCe9tgwz.HXe/qHgtMhc66dkHN8NnufhwC"

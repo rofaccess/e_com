@@ -4,7 +4,7 @@ RSpec.describe User, :type => :model do
   fixtures :users
 
   subject(:user) {
-    User.new(name: "Bob", email: "bob@bob.com")
+    User.new(name: "Bob", email: "bob@bob.com", password: "123456789")
   }
 
   it "save valid record" do
@@ -20,6 +20,6 @@ RSpec.describe User, :type => :model do
   it "not save duplicate email" do
     user.name = "Amy"
     user.email = "amy@email.com"
-    expect {user.save}.to raise_error(ActiveRecord::RecordNotUnique)
+    expect {user.save(validate: false)}.to raise_error(ActiveRecord::RecordNotUnique)
   end
 end

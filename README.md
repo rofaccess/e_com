@@ -113,3 +113,8 @@ Ejecutar un archivo de tests en particular dentro del contenedor
 ````sh
 $ rspec spec/controllers/products_controller_spec.rb
 ````
+
+Ejecutar brakeman dentro del contenedor
+````sh
+$ brakeman -o brakeman_results.html
+````

@@ -9,7 +9,7 @@ RUN echo "deb [trusted=yes] http://archive.debian.org/debian-security jessie/upd
 RUN echo "deb [trusted=yes] http://archive.debian.org/debian jessie main" >> /etc/apt/sources.list.d/jessie.list
 
 # Necesario para la funcion wait_for_db del entrypoint que usa el comando nc de netcat
-RUN apt-get update && apt-get install -y netcat-traditional
+RUN apt-get update && apt-get install -y netcat-traditional imagemagick
 
 # Indica cual es el directorio de trabajo dentro del contenedor
 WORKDIR /app

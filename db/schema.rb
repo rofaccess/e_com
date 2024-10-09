@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20241007180517) do
+ActiveRecord::Schema.define(:version => 20241009005524) do
 
   create_table "clients", :force => true do |t|
     t.string   "name",            :limit => 100, :null => false
@@ -70,13 +70,23 @@ ActiveRecord::Schema.define(:version => 20241007180517) do
   add_index "sale_orders", ["sale_number"], :name => "index_sale_orders_on_sale_number", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "name",       :limit => 100, :null => false
-    t.string   "email",      :limit => 100, :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.string   "name",                   :limit => 100,                 :null => false
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.string   "email",                                 :default => "", :null => false
+    t.string   "encrypted_password",                    :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                         :default => 0,  :null => false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   add_foreign_key "product_categories", "users", name: "product_categories_created_by_id_fk", column: "created_by_id"
 

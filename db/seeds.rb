@@ -12,11 +12,14 @@
 
 # Users ----------------------------------------------------------------------------------------------------------------
 users = [
-  { name: "Amy", email: "amy@gmail.com" },
-  { name: "Bob", email: "bob@gmail.com" }
+  { name: "Amy", email: "amy@email.com", password: "12345678" },
+  { name: "Bob", email: "bob@email.com", password: "12345678" },
+  { name: "John", email: "john@email.com", password: "12345678" },
+  { name: "Dean", email: "dean@email.com", password: "12345678" }
 ]
 
-User.import users, on_duplicate_key_update: {conflict_target: [:email], columns: [:name]}
+User.create(users)
+#User.import users, on_duplicate_key_update: {conflict_target: [:email], columns: [:name]}
 users = User.select([:name, :id]).index_by(&:name)
 
 # Products -------------------------------------------------------------------------------------------------------------
