@@ -1,4 +1,5 @@
 class Product < ActiveRecord::Base
+  has_paper_trail
   acts_as_paranoid
   attr_accessible :name, :price, :image
   attr_protected :created_by_id

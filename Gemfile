@@ -89,3 +89,6 @@ gem 'devise', '3.5.10'
 
 # ActiveRecord plugin allowing you to hide and restore records without actually deleting them. https://github.com/ActsAsParanoid/acts_as_paranoid/tree/v0.4.5
 gem 'acts_as_paranoid', '0.4.5'
+
+# Track changes to your rails models. https://github.com/paper-trail-gem/paper_trail/tree/v5.2.3
+gem 'paper_trail', '5.2.3'
