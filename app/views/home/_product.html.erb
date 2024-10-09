@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-image">
+    <figure class="image is-4by3">
+      <%= image_tag product.image.url, class: "has-background-grey-lighter" %>
+    </figure>
+  </div>
+
+  <div class="card-content">
+    <div class="content">
+      <div class="grid">
+        <p class="cell subtitle is-4">
+          <%= product.name %>
+        </p>
+
+        <p class="cell subtitle is-bold is-4 has-text-primary has-text-right">
+          <%= product.price %> $
+        </p>
+      </div>
+
+      <div class="field is-grouped is-justify-content-flex-end">
+        <% if !current_user || (user_signed_in? && !current_user.is_admin?) %>
+          <p class="control">
+            <%= link_to "", class: "button is-primary" do %>
+            <span class="icon">
+              <i class="fas fa-cart-shopping"></i>
+            </span>
+              <span>Comprar</span>
+            <% end %>
+          </p>
+        <% end %>
+
+        <% if current_user && current_user.is_admin? %>
+          <%= render "products/buttons", product: product %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

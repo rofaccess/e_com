@@ -1,0 +1,21 @@
+<p class="control">
+  <%= link_to product, title: "Show", class: "button is-small" do %>
+    <span class="icon">
+      <i class="fas fa-eye"></i>
+    </span>
+  <% end %>
+</p>
+<p class="control">
+  <%= link_to edit_product_path(product), title: "Edit", class: "button is-small" do %>
+    <span class="icon">
+      <i class="fas fa-pen-to-square"></i>
+    </span>
+  <% end %>
+</p>
+<p class="control">
+  <%= link_to product, method: :delete, data: { confirm: 'Are you sure?' }, title: "Delete", class: "button is-small is-danger is-outlined" do %>
+    <span class="icon">
+      <i class="fas fa-trash"></i>
+    </span>
+  <% end %>
+</p>
