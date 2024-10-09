@@ -1,4 +1,9 @@
-<%= link_to 'New Product', new_product_path, class: "button is-primary" %>
+<%= link_to new_product_path, class: "button is-primary" do %>
+  <span class="icon">
+    <i class="fas fa-plus"></i>
+  </span>
+  <span>New Product</span>
+<% end %>
 <hr>
 
 <div class="table-container">
@@ -18,13 +23,25 @@
         <td class="has-text-right">
           <div class="field is-grouped is-pulled-right">
             <p class="control">
-              <%= link_to 'Show', product, class: "button is-small" %>
+              <%= link_to product, title: "Show", class: "button is-small" do %>
+                <span class="icon">
+                  <i class="fas fa-eye"></i>
+                </span>
+              <% end %>
             </p>
             <p class="control">
-              <%= link_to 'Edit', edit_product_path(product), class: "button is-small" %>
+              <%= link_to edit_product_path(product), title: "Edit", class: "button is-small" do %>
+                <span class="icon">
+                  <i class="fas fa-pen-to-square"></i>
+                </span>
+              <% end %>
             </p>
             <p class="control">
-              <%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' }, class: "button is-danger is-small" %>
+              <%= link_to product, method: :delete, data: { confirm: 'Are you sure?' }, title: "Delete", class: "button is-small is-danger is-outlined" do %>
+                <span class="icon">
+                  <i class="fas fa-trash"></i>
+                </span>
+              <% end %>
             </p>
           </div>
         </td>

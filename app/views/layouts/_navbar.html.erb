@@ -13,9 +13,54 @@
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <%= link_to t('.home'), root_path, class: "navbar-item #{active_home_menu?}" %>
-      <%= link_to t('.products'), products_path, class: "navbar-item #{active_products_menu?}" %>
-      <%= link_to t('.product_categories'), "#", class: "navbar-item" %>
+      <%= link_to root_path, class: "navbar-item #{active_home_menu?}" do %>
+        <span class="icon">
+          <i class="fas fa-home"></i>
+        </span>
+        <span><%= t('.home') %></span>
+      <% end %>
+      <%= link_to products_path, class: "navbar-item #{active_products_menu?}" do %>
+        <span class="icon">
+          <i class="fas fa-cubes"></i>
+        </span>
+        <span><%= t('.products') %></span>
+      <% end %>
+    </div>
+
+    <div class="navbar-end">
+      <% if user_signed_in? %>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <%= link_to "#", class: "navbar-link" do %>
+            <span class="icon">
+              <i class="fas fa-user"></i>
+            </span>
+            <span><%= current_user.name %></span>
+          <% end %>
+
+          <div class="navbar-dropdown">
+            <%= link_to "#", class: "navbar-item" do %>
+              <span class="icon is-small">
+                <i class="fas fa-user"></i>
+              </span>
+              <span>My Profile</span>
+            <% end %>
+            <hr class="navbar-divider">
+            <%= link_to destroy_user_session_path, method: :delete, class: "navbar-item" do %>
+              <span class="icon is-small">
+                <i class="fas fa-arrow-right-from-bracket"></i>
+              </span>
+              <span>Sign Out</span>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <div class="navbar-item">
+          <div class="buttons">
+            <%= link_to "Sign up", new_registration_path(:user), class: "button is-link" %><br />
+            <%= link_to "Log in", new_session_path(:user), class: "button is-light" %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </nav>

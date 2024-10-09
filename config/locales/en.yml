@@ -1,4 +1,9 @@
 en:
+  layouts:
+    navbar:
+      home: Home
+      products: Products
+      product_categories: Categories
   date:
     abbr_day_names:
       - Sun

@@ -14,8 +14,6 @@ RSpec.describe "products/new", :type => :view do
       assert_select "input#product_name[name=?]", "product[name]"
 
       assert_select "input#product_price[name=?]", "product[price]"
-
-      assert_select "select#product_created_by_id[name=?]", "product[created_by_id]"
     end
   end
 end

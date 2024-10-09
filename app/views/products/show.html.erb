@@ -1,41 +1,39 @@
+<div class="box-container">
+  <div class="card">
+    <div class="card-image">
+      <figure class="image is-4by3 has-background-grey-lighter">
+        <%= image_tag('image.svg', alt: 'Placeholder Image') %>
+      </figure>
+    </div>
+    <div class="card-content">
+      <div class="content">
+        <p id="notice"><%= notice %></p>
 
-    <div class="card">
-      <div class="card-image">
-        <figure class="image is-4by3 is-128x128">
-          <img
-            src="https://bulma.io/assets/images/placeholders/1280x960.png"
-            alt="Placeholder image"
-            />
-        </figure>
-      </div>
-      <div class="card-content">
-        <div class="content">
-          <p id="notice"><%= notice %></p>
+        <p>
+          <b>Name:</b>
+          <%= @product.name %>
+        </p>
 
-          <p>
-            <b>Name:</b>
-            <%= @product.name %>
-          </p>
+        <p>
+          <b>Price:</b>
+          <%= @product.price %>
+        </p>
 
-          <p>
-            <b>Price:</b>
-            <%= @product.price %>
-          </p>
+        <p>
+          <b>Created by:</b>
+          <%= @product.created_by_name %>
+        </p>
 
-          <p>
-            <b>Created by:</b>
-            <%= @product.created_by_name %>
-          </p>
+        <div class="field is-grouped">
+          <div class="control">
+            <%= link_to '<- Back', products_path, class: "button" %>
+          </div>
 
-          <div class="field is-grouped">
-            <div class="control">
-              <%= link_to '<- Back', products_path, class: "button" %>
-            </div>
-
-            <div class="control">
-              <%= link_to 'Edit', edit_product_path(@product), class: "button is-primary" %>
-            </div>
+          <div class="control">
+            <%= link_to 'Edit', edit_product_path(@product), class: "button is-primary" %>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>

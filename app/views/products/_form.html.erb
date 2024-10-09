@@ -12,26 +12,19 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name, class: "label" %><br />
+    <%= f.label :name, class: "label" %>
     <div class="control">
       <%= f.text_field :name, class: "input" %>
     </div>
   </div>
   <div class="field">
-    <%= f.label :price, class: "label" %><br />
+    <%= f.label :price, class: "label" %>
     <div class="control">
       <%= f.text_field :price, class: "input" %>
     </div>
   </div>
-  <div class="field">
-    <%= f.label :created_by_id, class: "label" %><br />
-    <div class="control">
-      <div class="select">
-        <%= f.collection_select :created_by_id, User.all, :id, :name %>
-      </div>
-    </div>
-  </div>
 
+  <br>
   <div class="field is-grouped">
     <div class="control">
       <%= link_to '<- Back', products_path, class: "button" %>
@@ -44,7 +37,7 @@
     <% end %>
 
     <div class="control">
-      <%= f.submit :class => 'button is-primary' %>
+      <%= f.submit class: "button is-primary" %>
     </div>
   </div>
 <% end %>

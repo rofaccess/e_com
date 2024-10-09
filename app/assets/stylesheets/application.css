@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require fontawesome/css/all.min.css
  *= require bulma/bulma.min
  *= require_tree .
  */
@@ -21,4 +22,13 @@
 
 .navbar-item-active{
     background-color: hsla(221deg, 14%,calc(21% + -5%), 1) !important;
+}
+
+.box-container {
+    display: flex;
+    justify-content: center;
+
+    .box-xl {
+        max-width: 500px;
+    }
 }

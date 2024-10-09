@@ -9,15 +9,10 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <%= render "layouts/navbar" %>
 
-<%= render "layouts/navbar" %>
-
-<div class="container is-fluid">
   <section class="section">
-
-    <%= yield %>
-
+      <%= yield %>
   </section>
-</div>
 </body>
 </html>
