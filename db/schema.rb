@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20241009005524) do
     t.string   "name",          :limit => 100,                                :null => false
     t.decimal  "price",                        :precision => 10, :scale => 2, :null => false
     t.integer  "created_by_id",                                               :null => false
+    t.datetime "deleted_at"
     t.datetime "created_at",                                                  :null => false
     t.datetime "updated_at",                                                  :null => false
   end

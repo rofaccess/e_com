@@ -86,3 +86,6 @@ gem 'strong_parameters', '0.2.3'
 
 # Flexible authentication solution for Rails with Warden. https://github.com/heartcombo/devise/tree/v3.5.10
 gem 'devise', '3.5.10'
+
+# ActiveRecord plugin allowing you to hide and restore records without actually deleting them. https://github.com/ActsAsParanoid/acts_as_paranoid/tree/v0.4.5
+gem 'acts_as_paranoid', '0.4.5'

@@ -1,4 +1,5 @@
 class Product < ActiveRecord::Base
+  acts_as_paranoid
   attr_accessible :name, :price
   attr_protected :created_by_id
 

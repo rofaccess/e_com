@@ -17,4 +17,10 @@ RSpec.describe Product, :type => :model do
     product.name = "Jean"
     expect {product.save}.to raise_error(ActiveRecord::RecordNotUnique)
   end
+
+  it "soft delete record" do
+    product = products(:jean)
+    product.destroy
+    expect(product.deleted_at).not_to be(nil)
+  end
 end
