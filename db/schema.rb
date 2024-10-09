@@ -71,15 +71,16 @@ ActiveRecord::Schema.define(:version => 20241009005524) do
   add_index "sale_orders", ["sale_number"], :name => "index_sale_orders_on_sale_number", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "name",                   :limit => 100,                 :null => false
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
-    t.string   "email",                                 :default => "", :null => false
-    t.string   "encrypted_password",                    :default => "", :null => false
+    t.string   "name",                   :limit => 100,                    :null => false
+    t.boolean  "is_admin",                              :default => false
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
+    t.string   "email",                                 :default => "",    :null => false
+    t.string   "encrypted_password",                    :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                         :default => 0,  :null => false
+    t.integer  "sign_in_count",                         :default => 0,     :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"

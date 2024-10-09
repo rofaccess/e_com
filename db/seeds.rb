@@ -12,10 +12,10 @@
 
 # Users ----------------------------------------------------------------------------------------------------------------
 users = [
-  { email: "amy@email.com", password: "12345678" },
-  { email: "bob@email.com", password: "12345678" },
-  { email: "john@email.com", password: "12345678" },
-  { email: "dean@email.com", password: "12345678" }
+  { email: "amy-admin@email.com", password: "12345678", is_admin: true },
+  { email: "bob-admin@email.com", password: "12345678", is_admin: true },
+  { email: "john-client@email.com", password: "12345678" },
+  { email: "dean-client@email.com", password: "12345678" }
 ]
 
 User.create(users)
@@ -24,9 +24,9 @@ users = User.select([:name, :id]).index_by(&:name)
 
 # Products -------------------------------------------------------------------------------------------------------------
 products = [
-  { name: "T-Shirt", price: 30.99, created_by_id: users["Amy"].id },
-  { name: "Sweater", price: 50.99, created_by_id: users["Bob"].id },
-  { name: "Suit", price: 150.99, created_by_id: users["Bob"].id }
+  { name: "T-Shirt", price: 30.99, created_by_id: users["Amy-admin"].id },
+  { name: "Sweater", price: 50.99, created_by_id: users["Bob-admin"].id },
+  { name: "Suit", price: 150.99, created_by_id: users["Bob-admin"].id }
 ]
 
 Product.import products, on_duplicate_key_update: {conflict_target: [:name], columns: [:price, :created_by_id]}
@@ -34,10 +34,10 @@ products = Product.select([:name, :id, :price]).index_by(&:name)
 
 # Product Categories ---------------------------------------------------------------------------------------------------
 product_categories = [
-  { name: "Clothes", created_by_id: users["Amy"].id },
-  { name: "Winter Clothes", created_by_id: users["Amy"].id },
-  { name: "Casual Clothes", created_by_id: users["Bob"].id },
-  { name: "Formal Clothes", created_by_id: users["Bob"].id }
+  { name: "Clothes", created_by_id: users["Amy-admin"].id },
+  { name: "Winter Clothes", created_by_id: users["Amy-admin"].id },
+  { name: "Casual Clothes", created_by_id: users["Bob-admin"].id },
+  { name: "Formal Clothes", created_by_id: users["Bob-admin"].id }
 ]
 
 ProductCategory.import product_categories, on_duplicate_key_update: {conflict_target: [:name], columns: [:created_by_id]}

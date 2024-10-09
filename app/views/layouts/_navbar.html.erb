@@ -19,11 +19,14 @@
         </span>
         <span><%= t('.home') %></span>
       <% end %>
-      <%= link_to products_path, class: "navbar-item #{active_products_menu?}" do %>
+
+      <% if user_signed_in? && current_user.is_admin? %>
+        <%= link_to products_path, class: "navbar-item #{active_products_menu?}" do %>
         <span class="icon">
           <i class="fas fa-cubes"></i>
         </span>
-        <span><%= t('.products') %></span>
+          <span><%= t('.products') %></span>
+        <% end %>
       <% end %>
     </div>
 
