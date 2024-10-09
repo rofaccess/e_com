@@ -26,7 +26,9 @@
   <div class="field">
     <%= f.label :created_by_id, class: "label" %><br />
     <div class="control">
-      <%= f.text_field :created_by_id, class: "input" %>
+      <div class="select">
+        <%= f.collection_select :created_by_id, User.all, :id, :name %>
+      </div>
     </div>
   </div>
 

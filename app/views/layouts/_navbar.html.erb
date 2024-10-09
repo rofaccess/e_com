@@ -13,8 +13,8 @@
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <%= link_to t('.home'), root_path, class: "navbar-item" %>
-      <%= link_to t('.products'), products_path, class: "navbar-item" %>
+      <%= link_to t('.home'), root_path, class: "navbar-item #{active_home_menu?}" %>
+      <%= link_to t('.products'), products_path, class: "navbar-item #{active_products_menu?}" %>
       <%= link_to t('.product_categories'), "#", class: "navbar-item" %>
     </div>
   </div>

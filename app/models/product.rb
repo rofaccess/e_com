@@ -4,4 +4,6 @@ class Product < ActiveRecord::Base
   belongs_to :created_by, class_name: "User"
 
   validates :name, presence: true
+
+  delegate :name, to: :created_by, prefix: true
 end

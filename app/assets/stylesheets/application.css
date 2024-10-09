@@ -18,3 +18,7 @@
     --bulma-navbar-item-img-max-height: 4rem;
     padding: 0 .75rem !important;
 }
+
+.navbar-item-active{
+    background-color: hsla(221deg, 14%,calc(21% + -5%), 1) !important;
+}
