@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
     is_admin
   end
 
+  def is_client?
+    !is_admin?
+  end
+
   private
 
   def set_name

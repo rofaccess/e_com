@@ -1,4 +1,4 @@
-<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+<nav class="navbar is-fixed-top is-dark" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
       <%= image_tag('ecom_logo.svg', alt: 'ECom') %>
@@ -21,11 +21,22 @@
         <span><%= t('.home') %></span>
       <% end %>
 
-      <% if user_signed_in? && current_user.is_admin? %>
+      <% if user_signed_in? %>
+        <%= link_to sale_orders_path, class: "navbar-item #{active_sale_orders_menu?}" do %>
+          <span class="icon">
+            <i class="fas fa-cubes"></i>
+          </span>
+          <span>
+             <%= title %>
+          </span>
+        <% end %>
+      <% end %>
+
+      <% if logged_as_admin? %>
         <%= link_to products_path, class: "navbar-item #{active_products_menu?}" do %>
-        <span class="icon">
-          <i class="fas fa-cubes"></i>
-        </span>
+          <span class="icon">
+            <i class="fas fa-cubes"></i>
+          </span>
           <span><%= t('.products') %></span>
         <% end %>
       <% end %>
@@ -70,6 +81,7 @@
 </nav>
 
 <script>
+    /* From: https://bulma.io/documentation/components/navbar/ */
     document.addEventListener('DOMContentLoaded', () => {
 
         // Get all "navbar-burger" elements

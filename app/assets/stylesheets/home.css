@@ -2,3 +2,35 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
+/* From: https://css-tricks.com/an-auto-filling-css-grid-with-max-columns/ */
+
+.products-list {
+    /**
+     * User input values.
+     */
+    --grid-layout-gap: 40px;
+    --grid-column-count: 8; /* This gets overridden by an inline style. */
+    --grid-item--min-width: 250px; /* This gets overridden by an inline style. */
+
+    /**
+     * Calculated values.
+     */
+    --gap-count: calc(var(--grid-column-count) - 1);
+    --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+    --grid-item--max-width: calc((100% - var(--total-gap-width)) / var(--grid-column-count));
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));
+    grid-gap: var(--grid-layout-gap);
+
+    .product-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50px;
+
+        .card {
+            width: 100%;
+        }
+    }
+}

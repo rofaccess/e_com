@@ -10,6 +10,6 @@ RSpec.describe "home/index.html.erb", :type => :view do
 
   it "renders empty page" do
     render
-    assert_select "span", :text => "Comprar", :count => 2
+    assert_select ".product-item", :count => 2
   end
 end

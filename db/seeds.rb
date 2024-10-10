@@ -57,21 +57,12 @@ ProductProductCategory.import product_product_categories, on_duplicate_key_updat
   conflict_target: [:product_id, :product_category_id], columns: [:product_id, :product_category_id]
 }
 
-# Clients --------------------------------------------------------------------------------------------------------------
-clients = [
-  { name: "John", document_number: "11111" },
-  { name: "Dean", document_number: "22222" }
-]
-
-Client.import clients, on_duplicate_key_update:  {conflict_target: [:name, :document_number],
-                                                  columns: [:name, :document_number]}
-clients = Client.select([:name, :id]).index_by(&:name)
-
 # Sale Orders ---------------------------------------------------------------------------------------------------------
 sale_orders = [
-  { sale_number: "001", sale_at: Time.current, client_id: clients["John"].id, product_id: products["T-Shirt"].id, quantity: 2, price: products["T-Shirt"].price },
-  { sale_number: "002",sale_at: Time.current, client_id: clients["John"].id, product_id: products["Sweater"].id, quantity: 5, price: products["Sweater"].price },
-  { sale_number: "003",sale_at: Time.current, client_id: clients["Dean"].id, product_id: products["Suit"].id, quantity: 1, price: products["Suit"].price }
+  { sale_at: Time.current, client_id: users["John-client"].id, product_id: products["T-Shirt"].id, quantity: 2, price: products["T-Shirt"].price },
+  { sale_at: Time.current, client_id: users["John-client"].id, product_id: products["Sweater"].id, quantity: 5, price: products["Sweater"].price },
+  { sale_at: Time.current, client_id: users["Dean-client"].id, product_id: products["Suit"].id, quantity: 1, price: products["Suit"].price }
 ]
 
-SaleOrder.import sale_orders, on_duplicate_key_ignore: true
+#SaleOrder.import sale_orders, on_duplicate_key_ignore: true
+SaleOrder.create(sale_orders)

@@ -4,6 +4,8 @@ es:
       home: Inicio
       products: Productos
       product_categories: Categorías
+      sale_orders: Ventas
+      purchases: Compras
   date:
     abbr_day_names:
       - dom

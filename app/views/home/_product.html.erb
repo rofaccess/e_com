@@ -18,18 +18,13 @@
       </div>
 
       <div class="field is-grouped is-justify-content-flex-end">
-        <% if !current_user || (user_signed_in? && !current_user.is_admin?) %>
+        <% if logged_as_client? %>
           <p class="control">
-            <%= link_to "", class: "button is-primary" do %>
-            <span class="icon">
-              <i class="fas fa-cart-shopping"></i>
-            </span>
-              <span>Comprar</span>
-            <% end %>
+            <%= render "place_purchase_form", product: product %>
           </p>
         <% end %>
 
-        <% if current_user && current_user.is_admin? %>
+        <% if logged_as_admin? %>
           <%= render "products/buttons", product: product %>
         <% end %>
       </div>

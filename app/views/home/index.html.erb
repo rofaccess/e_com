@@ -1,8 +1,8 @@
 <h1 class="title">Available Products</h1>
 
-<div class="grid">
+<div class="products-list">
   <% @products.each do |product| %>
-    <div class="cell">
+    <div class="product-item">
       <%= render "product", product: product %>
     </div>
   <% end %>

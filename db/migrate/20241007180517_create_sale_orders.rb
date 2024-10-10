@@ -5,7 +5,7 @@ class CreateSaleOrders < ActiveRecord::Migration
       t.datetime :sale_at, null: false
 
       t.integer :client_id, null: false
-      t.foreign_key :clients
+      t.foreign_key :users, column: :client_id
 
       t.integer :product_id, null: false
       t.foreign_key :products

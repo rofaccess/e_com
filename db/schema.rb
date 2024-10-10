@@ -11,16 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20241009210323) do
+ActiveRecord::Schema.define(:version => 20241010102612) do
 
-  create_table "clients", :force => true do |t|
-    t.string   "name",            :limit => 100, :null => false
-    t.string   "document_number", :limit => 20,  :null => false
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+  create_table "custom_auto_increments", :force => true do |t|
+    t.string   "model_name"
+    t.integer  "counter",    :default => 0
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
-  add_index "clients", ["name", "document_number"], :name => "index_clients_on_name_and_document_number", :unique => true
+  add_index "custom_auto_increments", ["model_name"], :name => "index_custom_auto_increments_on_model_name"
 
   create_table "product_categories", :force => true do |t|
     t.string   "name",          :limit => 100, :null => false
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(:version => 20241009210323) do
 
   add_foreign_key "products", "users", name: "products_created_by_id_fk", column: "created_by_id"
 
-  add_foreign_key "sale_orders", "clients", name: "sale_orders_client_id_fk"
   add_foreign_key "sale_orders", "products", name: "sale_orders_product_id_fk"
+  add_foreign_key "sale_orders", "users", name: "sale_orders_client_id_fk", column: "client_id"
 
 end

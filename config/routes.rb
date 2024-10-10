@@ -1,4 +1,6 @@
 App::Application.routes.draw do
+  resources :sale_orders, only: [:create, :index]
+
   devise_for :users
 
   get "home/index"

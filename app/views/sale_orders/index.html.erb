@@ -1,0 +1,27 @@
+<h1 class="title"><%= title %></h1>
+
+<div class="table-container">
+  <table class="table is-fullwidth">
+    <tr>
+      <th>Number</th>
+      <th>Date</th>
+      <th>Client</th>
+      <th>Product</th>
+      <th class="has-text-right">Quantity</th>
+      <th class="has-text-right">Price</th>
+      <th class="has-text-right">Total</th>
+    </tr>
+
+    <% @sale_orders.each do |sale_order| %>
+      <tr>
+        <td><%= sale_order.sale_number %></td>
+        <td><%= I18n.l(sale_order.sale_at, format: :long) %></td>
+        <td><%= sale_order.client_name %></td>
+        <td><%= sale_order.product_name %></td>
+        <td class="has-text-right"><%= sale_order.quantity %></td>
+        <td class="has-text-right"><%= sale_order.price %></td>
+        <td class="has-text-right"><%= sale_order.total %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

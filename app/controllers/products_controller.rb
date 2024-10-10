@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :check_admin
 
   # GET /products
   # GET /products.json

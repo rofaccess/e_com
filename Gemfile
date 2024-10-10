@@ -92,3 +92,9 @@ gem 'acts_as_paranoid', '0.4.5'
 
 # Track changes to your rails models. https://github.com/paper-trail-gem/paper_trail/tree/v5.2.3
 gem 'paper_trail', '5.2.3'
+
+# Simple Rails gem to create custom autoincrement values to a database column. https://github.com/celsodantas/protokoll
+gem 'protokoll', '0.4.1'
+
+# Interactor Rails provides Rails support for the Interactor gem. https://github.com/collectiveidea/interactor-rails/tree/v2.1.0
+gem "interactor-rails", '2.1.0'

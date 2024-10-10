@@ -10,3 +10,9 @@ admin:
   name: Admin
   email: admin@email.com
   encrypted_password: "$2a$10$Nmf4xxKx/7veUL3Q5BDxCe9tgwz.HXe/qHgtMhc66dkHN8NnufhwC"
+  is_admin: true
+
+client:
+  name: Client
+  email: client@email.com
+  encrypted_password: "$2a$10$Nmf4xxKx/7veUL3Q5BDxCe9tgwz.HXe/qHgtMhc66dkHN8NnufhwC"
