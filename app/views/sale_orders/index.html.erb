@@ -13,7 +13,7 @@
     </tr>
 
     <% @sale_orders.each do |sale_order| %>
-      <tr>
+      <tr class="<%= sale_order.product.created_by_name == current_user.name ? 'has-background-info-90' : '' %>">
         <td><%= sale_order.sale_number %></td>
         <td><%= I18n.l(sale_order.sale_at, format: :long) %></td>
         <td><%= sale_order.client_name %></td>

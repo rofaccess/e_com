@@ -3,7 +3,12 @@ class PlacePurchase
 
   def call
     context.fail!(message: "Can't create purchase. Invalid client.") unless client
-    create_purchase
+
+    # Se utiliza un bloqueo pesimista para las condiciones de carrera
+    product.with_lock do
+      create_purchase
+      notify_first_purchase if product_purchases_count == 1
+    end
   end
 
   private
@@ -22,6 +27,16 @@ class PlacePurchase
     else
       context.fail!(message: "Can't create purchase")
     end
+  end
+
+  def notify_first_purchase
+    recipient = product.created_by_email
+    cc_recipients = User.admin_emails
+    Notifier.first_purchase_mail(recipient, cc_recipients, product.name).deliver
+  end
+
+  def product_purchases_count
+    SaleOrder.where(product_id: product.id).count
   end
 
   def client

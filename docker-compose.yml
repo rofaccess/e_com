@@ -46,6 +46,12 @@ services:
       - DATABASE_HOST=postgres # Notar que el host es postgres en referencia al servicio definido aquí
         # Si se desea ejecutar la aplicacion directamente en el host y no en un contenedor el host
         # debe ser localhost, aunque esto es un depende.
+      - SMPT_ADDRESS=${SMPT_ADDRESS}
+      - SMPT_PORT=${SMPT_PORT}
+      - SMPT_DOMAIN=${SMPT_DOMAIN}
+      - SMPT_USER_NAME=${SMPT_USER_NAME}
+      - SMPT_PASSWORD=${SMPT_PASSWORD}
+
     ports:
       - "3000:3000" # Asigna el puerto 3000 del host al puerto 3000 del contenedor
       - "1234:1234" # Puerto para depuración

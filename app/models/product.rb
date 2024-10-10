@@ -11,5 +11,5 @@ class Product < ActiveRecord::Base
 
   validates :name, presence: true
 
-  delegate :name, to: :created_by, prefix: true
+  delegate :name, :email, to: :created_by, prefix: true
 end

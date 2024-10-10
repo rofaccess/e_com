@@ -12,10 +12,10 @@
 
 # Users ----------------------------------------------------------------------------------------------------------------
 users = [
-  { email: "amy-admin@email.com", password: "12345678", is_admin: true },
-  { email: "bob-admin@email.com", password: "12345678", is_admin: true },
-  { email: "john-client@email.com", password: "12345678" },
-  { email: "dean-client@email.com", password: "12345678" }
+  { email: "amy-admin@email.com", password: "12345", is_admin: true },
+  { email: "bob-admin@email.com", password: "12345", is_admin: true },
+  { email: "john-client@email.com", password: "12345" },
+  { email: "dean-client@email.com", password: "12345" }
 ]
 
 User.create(users)

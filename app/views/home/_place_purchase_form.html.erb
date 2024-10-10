@@ -2,7 +2,7 @@
   <div class="field has-addons">
     <div class="control">
       <%= f.hidden_field :product_id, value: product.id %>
-      <%= f.text_field :quantity, type: :number, value: 1, class: "input", required: true %>
+      <%= f.text_field :quantity, type: :number, value: 1, class: "input", required: true, min: 1 %>
     </div>
     <div class="control">
       <%= button_tag(type: 'submit', class: 'button is-primary') do %>

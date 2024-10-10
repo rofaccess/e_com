@@ -18,7 +18,7 @@
     </tr>
 
     <% @products.each do |product| %>
-      <tr>
+      <tr class="<%= product.created_by_name == current_user.name ? 'has-background-info-90' : '' %>">
         <td><%= product.name %></td>
         <td class="has-text-right"><%= product.price %></td>
         <td><%= product.created_by_name %></td>
