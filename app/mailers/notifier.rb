@@ -1,5 +1,5 @@
 class Notifier < ActionMailer::Base
-  default from: "rofaccess@gmail.com"
+  default from: ENV['SMPT_USER_NAME']
 
   def first_purchase_mail(recipient, cc_recipients, product_name)
     @recipient = recipient

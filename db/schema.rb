@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20241010102612) do
+ActiveRecord::Schema.define(:version => 20241010235259) do
 
   create_table "custom_auto_increments", :force => true do |t|
     t.string   "model_name"
@@ -33,6 +33,18 @@ ActiveRecord::Schema.define(:version => 20241010102612) do
   add_index "product_categories", ["created_by_id"], :name => "index_product_categories_on_created_by_id"
   add_index "product_categories", ["name"], :name => "index_product_categories_on_name", :unique => true
 
+  create_table "product_images", :force => true do |t|
+    t.integer  "product_id",         :null => false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "product_images", ["product_id"], :name => "index_product_images_on_product_id"
+
   create_table "product_product_categories", :force => true do |t|
     t.integer  "product_id",          :null => false
     t.integer  "product_category_id", :null => false
@@ -45,16 +57,12 @@ ActiveRecord::Schema.define(:version => 20241010102612) do
   add_index "product_product_categories", ["product_id"], :name => "index_product_product_categories_on_product_id"
 
   create_table "products", :force => true do |t|
-    t.string   "name",               :limit => 100,                                :null => false
-    t.decimal  "price",                             :precision => 10, :scale => 2, :null => false
-    t.integer  "created_by_id",                                                    :null => false
+    t.string   "name",          :limit => 100,                                :null => false
+    t.decimal  "price",                        :precision => 10, :scale => 2, :null => false
+    t.integer  "created_by_id",                                               :null => false
     t.datetime "deleted_at"
-    t.datetime "created_at",                                                       :null => false
-    t.datetime "updated_at",                                                       :null => false
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
   end
 
   add_index "products", ["created_by_id"], :name => "index_products_on_created_by_id"
@@ -107,6 +115,8 @@ ActiveRecord::Schema.define(:version => 20241010102612) do
   add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
 
   add_foreign_key "product_categories", "users", name: "product_categories_created_by_id_fk", column: "created_by_id"
+
+  add_foreign_key "product_images", "products", name: "product_images_product_id_fk"
 
   add_foreign_key "product_product_categories", "product_categories", name: "product_product_categories_product_category_id_fk"
   add_foreign_key "product_product_categories", "products", name: "product_product_categories_product_id_fk"

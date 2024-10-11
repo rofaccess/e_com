@@ -98,3 +98,6 @@ gem 'protokoll', '0.4.1'
 
 # Interactor Rails provides Rails support for the Interactor gem. https://github.com/collectiveidea/interactor-rails/tree/v2.1.0
 gem "interactor-rails", '2.1.0'
+
+# Dynamic nested forms using jQuery made easy; works with formtastic, simple_form or default forms. https://github.com/nathanvda/cocoon
+gem "cocoon", "1.2.15"

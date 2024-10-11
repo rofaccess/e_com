@@ -1,0 +1,16 @@
+<div class="nested-fields block">
+  <div class="field has-addons">
+    <div class="control">
+      <%= f.hidden_field :id %>
+      <%= f.file_field :image, class: "input" %>
+      <p><%= f.object ? f.object.image_file_name : '' %></p>
+    </div>
+    <div class="control">
+      <%= link_to_remove_association f, class: "button is-danger" do %>
+        <span class="icon">
+          <i class="fas fa-trash"></i>
+        </span>
+      <% end %>
+    </div>
+  </div>
+</div>

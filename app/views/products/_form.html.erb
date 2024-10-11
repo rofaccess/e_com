@@ -4,9 +4,9 @@
       <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
 
       <ul>
-      <% @product.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @product.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -21,18 +21,24 @@
   <div class="field">
     <%= f.label :price, class: "label" %>
     <div class="control">
-      <%= f.text_field :price, class: "input" %>
+      <%= f.text_field :price, type: :number, class: "input" %>
     </div>
   </div>
 
-  <div class="field">
-    <%= f.label :image, class: "label" %>
-    <div class="control">
-      <%= f.file_field :image, class: "input" %>
+  <label class="label">Images</label>
+  <div id="product_images" class="block">
+    <%= f.fields_for :product_images do |pi| %>
+      <%= render "product_image_fields", f: pi %>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association f, :product_images, class: "button is-info" do %>
+        <span class="icon">
+          <i class="fas fa-plus"></i>
+        </span>
+      <% end %>
     </div>
   </div>
 
-  <br>
   <div class="field is-grouped">
     <div class="control">
       <%= link_to '<- Back', products_path, class: "button" %>
