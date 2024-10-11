@@ -1,0 +1,5 @@
+<% if product.first_image %>
+  <%= image_tag product.first_image_url, class: "has-background-grey-lighter" %>
+<% else %>
+  <%= image_tag('image.svg', alt: 'Placeholder Image', class: "has-background-grey-lighter") %>
+<% end %>

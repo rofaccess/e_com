@@ -1,9 +1,19 @@
 <div class="nested-fields block">
   <div class="field has-addons">
-    <div class="control">
-      <%= f.hidden_field :id %>
-      <%= f.file_field :image, class: "input" %>
-      <p><%= f.object ? f.object.image_file_name : '' %></p>
+    <div class="control" style="width: 100%;">
+      <div class="file has-name">
+        <label class="file-label">
+          <%= f.hidden_field :id %>
+          <%= f.file_field :image, class: "file-input" %>
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label"> Choose a file… </span>
+          </span>
+          <span class="file-name"> <%= f.object ? f.object.image_file_name : 'No file uploaded' %> </span>
+        </label>
+      </div>
     </div>
     <div class="control">
       <%= link_to_remove_association f, class: "button is-danger" do %>
@@ -14,3 +24,15 @@
     </div>
   </div>
 </div>
+
+<script>
+    var fileInputs = document.querySelectorAll(".file input[type=file]");
+    fileInputs.forEach((fileInput) => {
+        fileInput.onchange = () => {
+            if (fileInput.files.length > 0) {
+                const fileName = fileInput.parentElement.querySelector(".file-name");
+                fileName.textContent = fileInput.files[0].name;
+            }
+        };
+    });
+</script>

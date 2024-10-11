@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-image">
       <figure class="image is-4by3">
-        <%= image_tag @product.first_image_url, class: "has-background-grey-lighter" %>
+        <%= render "show_image", product: @product %>
       </figure>
     </div>
     <div class="card-content">

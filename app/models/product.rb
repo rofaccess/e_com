@@ -12,7 +12,11 @@ class Product < ActiveRecord::Base
 
   delegate :name, :email, to: :created_by, prefix: true
 
+  def first_image
+    product_images.first.try(:image)
+  end
+
   def first_image_url
-    product_images.order(:id).first.try(:image).try(:url)
+    first_image.try(:url)
   end
 end
