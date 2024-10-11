@@ -1,10 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "products/index", :type => :view do
-  fixtures :products
+  fixtures :users, :products
+
+  let(:user) { users(:admin) }
 
   before(:each) do
     assign(:products, [products(:jean), products(:short)])
+    allow(view).to receive(:current_user).and_return(user)
   end
 
   it "renders a list of products" do
