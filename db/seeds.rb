@@ -10,59 +10,106 @@
 # Además, permite ejecutar varias veces el seed sin que se dupliquen datos, lo que evita lógica extra para validar
 # la existencia o no de los datos durante las pruebas en desarrollo
 
+def aleatory_admin
+  @_admin_users ||= User.only_admins
+  @_admin_users_count ||= @_admin_users.count
+  @_admin_users[rand(@_admin_users_count)]
+end
+
+def aleatory_client
+  @_client_users ||= User.only_clients
+  @_client_users_count ||= @_client_users.count
+  @_client_users[rand(@_client_users_count)]
+end
+
+def aleatory_categories(max_quantity = 5)
+  @_categories ||= ProductCategory.all
+  @_categories_count ||= @_categories.count
+  aleatory_quantity = rand(max_quantity)
+  (1..aleatory_quantity).map { |_|  @_categories[rand(@_categories_count)] }.uniq
+end
+
+def all_products
+  @_products ||= Product.all
+end
+
+def aleatory_products(max_quantity = 5)
+  @_products_count ||= all_products.count
+  aleatory_quantity = rand(max_quantity)
+  (1..aleatory_quantity).map { |_|  all_products[rand(@_products_count)] }.uniq
+end
+
 # Users ----------------------------------------------------------------------------------------------------------------
-users = [
-  { email: "amy-admin@email.com", password: "12345", is_admin: true },
-  { email: "bob-admin@email.com", password: "12345", is_admin: true },
-  { email: "john-client@email.com", password: "12345" },
-  { email: "dean-client@email.com", password: "12345" }
-]
+def create_users
+  users = [
+    { email: "amy-admin@email.com", password: "12345", is_admin: true },
+    { email: "bob-admin@email.com", password: "12345", is_admin: true },
+    { email: "john-client@email.com", password: "12345" },
+    { email: "dean-client@email.com", password: "12345" }
+  ]
 
-User.create(users)
-#User.import users, on_duplicate_key_update: {conflict_target: [:email], columns: [:name]}
-users = User.select([:name, :id]).index_by(&:name)
-
-# Products -------------------------------------------------------------------------------------------------------------
-products = [
-  { name: "T-Shirt", price: 30.99, created_by_id: users["Amy-admin"].id },
-  { name: "Sweater", price: 50.99, created_by_id: users["Bob-admin"].id },
-  { name: "Suit", price: 150.99, created_by_id: users["Bob-admin"].id }
-]
-
-Product.import products, on_duplicate_key_update: {conflict_target: [:name], columns: [:price, :created_by_id]}
-products = Product.select([:name, :id, :price]).index_by(&:name)
+  User.create(users)
+end
 
 # Product Categories ---------------------------------------------------------------------------------------------------
-product_categories = [
-  { name: "Clothes", created_by_id: users["Amy-admin"].id },
-  { name: "Winter Clothes", created_by_id: users["Amy-admin"].id },
-  { name: "Casual Clothes", created_by_id: users["Bob-admin"].id },
-  { name: "Formal Clothes", created_by_id: users["Bob-admin"].id }
-]
+def create_product_categories(quantity = 10)
+  # Faker puede llegar a genear nombres repetidos y el métódo import no puede importar repetidos
+  # por eso se construye primero un arreglo de nombres y se usa el métódo uniq
+  product_category_names = (1..quantity).map { |_| Faker::Commerce.department(2) }.uniq
 
-ProductCategory.import product_categories, on_duplicate_key_update: {conflict_target: [:name], columns: [:created_by_id]}
-product_categories = ProductCategory.select([:name, :id]).index_by(&:name)
+  product_categories = product_category_names.map do |product_category_name|
+    { name: product_category_name, created_by_id: aleatory_admin.id }
+  end
+
+  ProductCategory.import product_categories, on_duplicate_key_ignore: true
+end
+
+# Products -------------------------------------------------------------------------------------------------------------
+def create_products(quantity = 20)
+  product_names = (1..quantity).map { |_| Faker::Commerce.product_name }.uniq
+  products = product_names.map do |product_name|
+    { name: product_name, price: Faker::Commerce.price, created_by_id: aleatory_admin.id }
+  end
+
+  Product.import products, on_duplicate_key_ignore: true
+end
 
 # Product - Product Categories -----------------------------------------------------------------------------------------
+def create_product_product_categories
+  product_product_categories = all_products.flat_map do |product|
+    aleatory_categories.map do |category|
+      { product_id: product.id, product_category_id: category.id }
+    end
+  end
+  ProductProductCategory.import(product_product_categories, on_duplicate_key_ignore: true)
+end
 
-product_product_categories = [
-  { product_id: products["T-Shirt"].id, product_category_id: product_categories["Clothes"].id },
-  { product_id: products["T-Shirt"].id, product_category_id: product_categories["Casual Clothes"].id },
-  { product_id: products["Sweater"].id, product_category_id: product_categories["Clothes"].id },
-  { product_id: products["Sweater"].id, product_category_id: product_categories["Winter Clothes"].id },
-  { product_id: products["Suit"].id, product_category_id: product_categories["Formal Clothes"].id },
-]
+# Sale Orders ----------------------------------------------------------------------------------------------------------
+def create_sale_orders(quantity = 30)
+  last_sale_number = SaleOrder.last_sale_number.to_i
 
-ProductProductCategory.import product_product_categories, on_duplicate_key_update: {
-  conflict_target: [:product_id, :product_category_id], columns: [:product_id, :product_category_id]
-}
+  sale_orders = aleatory_products(quantity).map do |product|
+    last_sale_number += 1
+    {
+      sale_number: last_sale_number.to_s,
+      sale_at: Faker::Time.backward(30, :morning),
+      client_id: aleatory_client.id,
+      product_id: product.id,
+      quantity: Faker::Number.between(1, 100),
+      price: product.price
+    }
+  end
 
-# Sale Orders ---------------------------------------------------------------------------------------------------------
-sale_orders = [
-  { sale_at: Time.current, client_id: users["John-client"].id, product_id: products["T-Shirt"].id, quantity: 2, price: products["T-Shirt"].price },
-  { sale_at: Time.current, client_id: users["John-client"].id, product_id: products["Sweater"].id, quantity: 5, price: products["Sweater"].price },
-  { sale_at: Time.current, client_id: users["Dean-client"].id, product_id: products["Suit"].id, quantity: 1, price: products["Suit"].price }
-]
+  SaleOrder.update_last_sale_number(last_sale_number)
 
-#SaleOrder.import sale_orders, on_duplicate_key_ignore: true
-SaleOrder.create(sale_orders)
+  SaleOrder.import sale_orders, on_duplicate_key_ignore: true
+end
+
+# Create data
+create_users
+
+create_product_categories(15) if ProductCategory.count.zero?
+create_products(50)
+create_product_product_categories if ProductProductCategory.count.zero?
+
+create_sale_orders(50)

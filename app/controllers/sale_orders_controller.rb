@@ -7,6 +7,7 @@ class SaleOrdersController < ApplicationController
   def index
     @sale_orders = SaleOrder.includes(:client, product: :created_by)
     @sale_orders = @sale_orders.where(client_id: current_user.id) if current_user.is_client?
+    @sale_orders = @sale_orders.page(params[:page])
 
     respond_to do |format|
       format.html

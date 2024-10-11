@@ -2,8 +2,12 @@
 
 <div class="products-list">
   <% @products.each do |product| %>
-    <div class="product-item">
+    <div class="card product-item">
       <%= render "product", product: product %>
     </div>
   <% end %>
 </div>
+
+<% if @products.total_pages > 1  %>
+  <%= render "layouts/pagination_navbar", records: @products %>
+<% end %>

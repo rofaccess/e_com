@@ -44,3 +44,9 @@
         }
     }
 }
+
+.pagination-navbar {
+    display: block !important;
+    padding: 1rem var(--bulma-section-padding-desktop) !important;
+    padding-bottom: 2rem !important;
+}

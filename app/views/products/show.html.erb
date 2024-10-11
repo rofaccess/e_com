@@ -16,7 +16,7 @@
 
         <p>
           <b>Price:</b>
-          <%= @product.price %>
+          <%= number_with_delimiter(@product.price, delimiter: '.', separator: ',') %>
         </p>
 
         <p>

@@ -101,3 +101,6 @@ gem "interactor-rails", '2.1.0'
 
 # Dynamic nested forms using jQuery made easy; works with formtastic, simple_form or default forms. https://github.com/nathanvda/cocoon
 gem "cocoon", "1.2.15"
+
+#  A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Ruby webapps. https://github.com/kaminari/kaminari/tree/v0.17.0
+gem 'kaminari'

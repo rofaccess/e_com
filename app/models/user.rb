@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   before_save :set_name
 
   scope :only_admins, -> { where(is_admin: true) }
+  scope :only_clients, -> { where(is_admin: false) }
 
   def is_admin?
     is_admin

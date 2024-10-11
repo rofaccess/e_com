@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.includes(:created_by, :product_categories)
+    @products = Product.includes(:created_by, :product_categories).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

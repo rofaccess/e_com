@@ -1,7 +1,9 @@
 <h1 class="title"><%= title %></h1>
 
+<hr><%= paginate @sale_orders %><hr>
+
 <div class="table-container">
-  <table class="table is-fullwidth">
+  <table class="table is-fullwidth is-hoverable">
     <tr>
       <th>Number</th>
       <th>Date</th>
@@ -18,10 +20,12 @@
         <td><%= I18n.l(sale_order.sale_at, format: :long) %></td>
         <td><%= sale_order.client_name %></td>
         <td><%= sale_order.product_name %></td>
-        <td class="has-text-right"><%= sale_order.quantity %></td>
-        <td class="has-text-right"><%= sale_order.price %></td>
-        <td class="has-text-right"><%= sale_order.total %></td>
+        <td class="has-text-right"><%= number_with_delimiter(sale_order.quantity, delimiter: '.', separator: ',') %></td>
+        <td class="has-text-right"><%= number_with_delimiter(sale_order.price, delimiter: '.', separator: ',') %></td>
+        <td class="has-text-right"><%= number_with_delimiter(sale_order.total, delimiter: '.', separator: ',') %></td>
       </tr>
     <% end %>
   </table>
 </div>
+
+<hr><%= paginate @sale_orders %><hr>

@@ -6,10 +6,11 @@
   </span>
   <span>New Product</span>
 <% end %>
-<hr>
+
+<hr><%= paginate @products %><hr>
 
 <div class="table-container">
-  <table class="table is-fullwidth">
+  <table class="table is-fullwidth is-hoverable">
     <tr>
       <th>Name</th>
       <th class="has-text-right">Price</th>
@@ -33,3 +34,5 @@
     <% end %>
   </table>
 </div>
+
+<hr><%= paginate @products %><hr>

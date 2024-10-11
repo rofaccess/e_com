@@ -1,33 +1,38 @@
-<div class="card">
-  <div class="card-image">
-    <figure class="image is-4by3">
-      <%= render "products/show_image", product: product %>
-    </figure>
+<div class="card-image">
+  <figure class="image is-4by3">
+    <%= render "products/show_image", product: product %>
+  </figure>
+</div>
+
+<div class="card-content">
+  <div>
+    <p class="subtitle is-4">
+      <%= product.name %>
+    </p>
+
+    <p>
+      <% product.product_categories.each do |category| %>
+        <span class="tag is-info is-light"><%= category.name %></span>
+      <% end %>
+    </p>
   </div>
 
-  <div class="card-content">
-    <div class="content">
-      <div class="grid">
-        <p class="cell subtitle is-4">
-          <%= product.name %>
+  <div>
+    <p class="subtitle is-4 has-text-primary has-text-right">
+      <%= number_with_delimiter(product.price, delimiter: '.', separator: ',') %> $
+    </p>
+
+    <% unless unlogged? %>
+      <% if logged_as_client? %>
+        <p class="control">
+          <%= render "place_purchase_form", product: product %>
         </p>
-
-        <p class="cell subtitle is-bold is-4 has-text-primary has-text-right">
-          <%= product.price %> $
-        </p>
-      </div>
-
-      <div class="field is-grouped is-justify-content-flex-end">
-        <% if logged_as_client? %>
-          <p class="control">
-            <%= render "place_purchase_form", product: product %>
-          </p>
-        <% end %>
-
-        <% if logged_as_admin? %>
+      <% end %>
+      <% if logged_as_admin? %>
+        <div class="field is-grouped is-pulled-right">
           <%= render "products/buttons", product: product %>
-        <% end %>
-      </div>
-    </div>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 </div>
