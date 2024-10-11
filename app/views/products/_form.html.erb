@@ -25,6 +25,13 @@
     </div>
   </div>
 
+  <div class="field">
+    <%= f.label :product_category_ids, "Categories", class: "label" %>
+    <div class="select is-multiple" style="width: 100%;">
+      <%= f.collection_select :product_category_ids, ProductCategory.all, :id, :name, {}, { multiple: true, style: "width: 100%;" } %>
+    </div>
+  </div>
+
   <label class="label">Images</label>
   <div id="product_images" class="block">
     <%= f.fields_for :product_images do |pi| %>

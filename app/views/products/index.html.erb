@@ -13,6 +13,7 @@
     <tr>
       <th>Name</th>
       <th class="has-text-right">Price</th>
+      <th>Categories</th>
       <th>Created by</th>
       <th></th>
     </tr>
@@ -21,6 +22,7 @@
       <tr class="<%= product.created_by_name == current_user.name ? 'has-background-info-90' : '' %>">
         <td><%= product.name %></td>
         <td class="has-text-right"><%= product.price %></td>
+        <td><%= product.product_categories_list %></td>
         <td><%= product.created_by_name %></td>
         <td>
           <div class="field is-grouped is-pulled-right">

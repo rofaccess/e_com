@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.includes(:created_by)
+    @products = Product.includes(:created_by, :product_categories)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -90,6 +90,6 @@ class ProductsController < ApplicationController
   # since you'll be able to reuse the same permit list between create and update. Also, you
   # can specialize this method with per-user checking of permissible attributes.
   def product_params
-    params.require(:product).permit(:name, :price, product_images_attributes: [:id, :image, :_destroy])
+    params.require(:product).permit(:name, :price, product_category_ids: [], product_images_attributes: [:id, :image, :_destroy])
   end
 end

@@ -8,6 +8,10 @@ class Product < ActiveRecord::Base
   has_many :product_images
   accepts_nested_attributes_for :product_images, reject_if: :all_blank, allow_destroy: true
 
+  has_many :product_product_categories
+  has_many :product_categories, through: :product_product_categories
+  accepts_nested_attributes_for :product_categories, allow_destroy: true
+
   validates :name, presence: true
 
   delegate :name, :email, to: :created_by, prefix: true
@@ -18,5 +22,9 @@ class Product < ActiveRecord::Base
 
   def first_image_url
     first_image.try(:url)
+  end
+
+  def product_categories_list
+    product_categories.map(&:name).join(", ")
   end
 end
