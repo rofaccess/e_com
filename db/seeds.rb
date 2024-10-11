@@ -88,6 +88,10 @@ end
 def create_sale_orders(quantity = 30)
   last_sale_number = SaleOrder.last_sale_number.to_i
 
+  if last_sale_number.zero?
+    SaleOrder.create_sale_number_counter
+  end
+
   sale_orders = aleatory_products(quantity).map do |product|
     last_sale_number += 1
     {
@@ -100,7 +104,7 @@ def create_sale_orders(quantity = 30)
     }
   end
 
-  SaleOrder.update_last_sale_number(last_sale_number)
+  SaleOrder.update_sale_number_counter(last_sale_number)
 
   SaleOrder.import sale_orders, on_duplicate_key_ignore: true
 end
@@ -112,4 +116,4 @@ create_product_categories(15) if ProductCategory.count.zero?
 create_products(50)
 create_product_product_categories if ProductProductCategory.count.zero?
 
-create_sale_orders(50)
+create_sale_orders(10)

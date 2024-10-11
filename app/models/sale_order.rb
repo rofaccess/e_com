@@ -18,7 +18,14 @@ class SaleOrder < ActiveRecord::Base
       last.try(:sale_number) || 0
     end
 
-    def update_last_sale_number(last_sale_number)
+    def create_sale_number_counter
+      current_time = Time.current
+      ActiveRecord::Base.connection.execute(
+        ActiveRecord::Base.send(:sanitize_sql_array, ["INSERT INTO custom_auto_increments (model_name, counter, created_at, updated_at) VALUES (?, ?, ?, ?)", "sale_order", 1, current_time, current_time])
+      )
+    end
+
+    def update_sale_number_counter(last_sale_number)
       ActiveRecord::Base.connection.execute(
         ActiveRecord::Base.send(:sanitize_sql_array, ["UPDATE custom_auto_increments SET counter = ? WHERE model_name = 'sale_order'", last_sale_number])
       )

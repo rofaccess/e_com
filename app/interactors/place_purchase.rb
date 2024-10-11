@@ -44,6 +44,6 @@ class PlacePurchase
   end
 
   def product
-    Product.find(context.product_id)
+    @_product ||= Product.find(context.product_id)
   end
 end

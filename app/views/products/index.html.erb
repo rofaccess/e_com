@@ -12,6 +12,7 @@
 <div class="table-container">
   <table class="table is-fullwidth is-hoverable">
     <tr>
+      <th>#</th>
       <th>Name</th>
       <th class="has-text-right">Price</th>
       <th>Categories</th>
@@ -19,8 +20,9 @@
       <th></th>
     </tr>
 
-    <% @products.each do |product| %>
+    <% @products.each_with_index do |product, index| %>
       <tr class="<%= product.created_by_name == current_user.name ? 'has-background-info-90' : '' %>">
+        <td><%= index + 1 %></td>
         <td><%= product.name %></td>
         <td class="has-text-right"><%= product.price %></td>
         <td><%= product.product_categories_list %></td>

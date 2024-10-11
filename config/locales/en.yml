@@ -6,6 +6,10 @@ en:
       product_categories: Categories
       sale_orders: Sale Orders
       purchases: Purchases
+  views:
+    pagination:
+      previous: Previous
+      next: Next Page
   date:
     abbr_day_names:
       - Sun

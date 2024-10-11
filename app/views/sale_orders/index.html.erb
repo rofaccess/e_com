@@ -5,7 +5,8 @@
 <div class="table-container">
   <table class="table is-fullwidth is-hoverable">
     <tr>
-      <th>Number</th>
+      <th>#</th>
+      <th class="has-text-right">Number</th>
       <th>Date</th>
       <th>Client</th>
       <th>Product</th>
@@ -14,9 +15,10 @@
       <th class="has-text-right">Total</th>
     </tr>
 
-    <% @sale_orders.each do |sale_order| %>
+    <% @sale_orders.each_with_index do |sale_order, index| %>
       <tr class="<%= sale_order.product.created_by_name == current_user.name ? 'has-background-info-90' : '' %>">
-        <td><%= sale_order.sale_number %></td>
+        <td><%= index + 1 %></td>
+        <td class="has-text-right"><%= sale_order.sale_number %></td>
         <td><%= I18n.l(sale_order.sale_at, format: :long) %></td>
         <td><%= sale_order.client_name %></td>
         <td><%= sale_order.product_name %></td>

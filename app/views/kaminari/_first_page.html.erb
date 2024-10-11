@@ -6,4 +6,6 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<%= link_to_if true, t('views.pagination.first').html_safe, url, :remote => remote, :class => "pagination-previous#{' is-disabled' if current_page.first?}" %>
+<li>
+  <%= link_to_unless false, 1, url, :remote => remote, :class => "pagination-link#{' is-current' if current_page.first?}" %>
+</li>
