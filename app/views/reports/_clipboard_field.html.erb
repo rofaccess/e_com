@@ -1,0 +1,13 @@
+<div class="field has-addons">
+  <div class="control">
+    <%= button_tag(type: "button", class: "button is-primary", title: "Copy to Clipboard", onclick: "copyToClipboard(this)") do %>
+        <span class="icon">
+          <i class="fas fa-clipboard"></i>
+        </span>
+    <% end %>
+  </div>
+
+  <div class="control" style="width: 100%;">
+    <%= text_field_tag :script, {}, value: value, class: "input script-input", readonly: true %>
+  </div>
+</div>

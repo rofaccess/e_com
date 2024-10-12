@@ -6,6 +6,7 @@ es:
       product_categories: Categorías
       sale_orders: Ventas
       purchases: Compras
+      reports: Reportes
   date:
     abbr_day_names:
       - dom

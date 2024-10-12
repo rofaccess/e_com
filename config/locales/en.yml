@@ -6,6 +6,7 @@ en:
       product_categories: Categories
       sale_orders: Sale Orders
       purchases: Purchases
+      reports: Reports
   views:
     pagination:
       previous: Previous

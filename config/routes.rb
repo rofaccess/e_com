@@ -1,9 +1,22 @@
+require "api/api_constraints"
+
 App::Application.routes.draw do
+  resources :reports, only: :index
+
+  namespace :api, defaults: {format: 'json'} do
+    scope module: :v1, constraints: ApiConstraints.new(version: 1) do
+      resources :reports, only: :index
+    end
+    scope module: :v2, constraints: ApiConstraints.new(version: 2, default: true) do
+      resources :reports, only: :index
+    end
+  end
+
   resources :sale_orders, only: [:create, :index]
 
   devise_for :users
 
-  get "home/index"
+  resources :home, only: :index
 
   resources :products
 

@@ -6,7 +6,7 @@ RSpec.describe "products/index", :type => :view do
   let(:user) { users(:admin) }
 
   before(:each) do
-    assign(:products, [products(:jean), products(:short)])
+    assign(:products, Product.page)
     allow(view).to receive(:current_user).and_return(user)
   end
 

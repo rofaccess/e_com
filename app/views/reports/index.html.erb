@@ -1,0 +1,17 @@
+<h1 class="title"><%= t("layouts.navbar.reports") %></h1>
+<h2 class="subtitle">Api Reports with JWT authentication</h2>
+
+<div class="content">
+  <h5>JWT Token</h5>
+  <p>Based in current user_id and JWT_SECRET_TOKEN from .env</p>
+  <p><%= render "clipboard_field", value: @jwt_token %></p>
+
+  <h5>Most purchased products by category</h5>
+
+  <p>Deprecated V1 API</p>
+  <p><%= render "clipboard_field", value: @apis[:deprecated_api] %></p>
+
+  <p>Default V2 API</p>
+  <p><%= render "clipboard_field", value: @apis[:most_purchased_products_by_category] %></p>
+
+</div>

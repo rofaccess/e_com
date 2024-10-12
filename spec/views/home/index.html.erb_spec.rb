@@ -4,7 +4,7 @@ RSpec.describe "home/index.html.erb", :type => :view do
   fixtures :products
 
   before(:each) do
-    @products = assign(:products, Product.all)
+    @products = assign(:products, Product.limit(2).page)
     allow(view).to receive(:current_user).and_return(nil)
   end
 
