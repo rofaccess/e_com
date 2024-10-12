@@ -31,7 +31,7 @@ class PlacePurchase
 
   def notify_first_purchase
     recipient = product.created_by_email
-    cc_recipients = User.admin_emails
+    cc_recipients = User.admin_emails(recipient)
     Notifier.first_purchase_mail(recipient, cc_recipients, product.name).deliver
   end
 
