@@ -6,12 +6,15 @@
   <p>Based in current user_id and JWT_SECRET_TOKEN from .env</p>
   <p><%= render "clipboard_field", value: @jwt_token %></p>
 
-  <h5>Most purchased products by category</h5>
+  <h5>JWT Testing</h5>
 
   <p>Deprecated V1 API</p>
   <p><%= render "clipboard_field", value: @apis[:deprecated_api] %></p>
 
   <p>Default V2 API</p>
-  <p><%= render "clipboard_field", value: @apis[:most_purchased_products_by_category] %></p>
+  <p><%= render "clipboard_field", value: @apis[:jwt_testing] %></p>
+
+  <h5>Most purchased products by category</h5>
+  <p><%= render "clipboard_field", value: @apis[:most_purchased_products_by_each_category] %></p>
 
 </div>

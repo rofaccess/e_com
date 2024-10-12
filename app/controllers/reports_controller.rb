@@ -6,8 +6,9 @@ class ReportsController < ApplicationController
   def index
     @jwt_token = JwtToken.encode({ user_id: current_user.id })
     @apis = {
-      deprecated_api: "curl -w '\\n' -H 'Accept: application/vnd.example.v1' -H 'Authorization: #{@jwt_token}' http://localhost:3000/api/reports",
-      most_purchased_products_by_category: "curl -w '\\n' -H 'Authorization: #{@jwt_token}' http://localhost:3000/api/reports"
+      deprecated_api: "curl -w '\\n' -H 'Accept: application/vnd.example.v1' -H 'Authorization: #{@jwt_token}' #{request.base_url}#{api_reports_path}",
+      jwt_testing: "curl -w '\\n' -H 'Authorization: #{@jwt_token}' #{request.base_url}#{api_reports_path}",
+      most_purchased_products_by_each_category: "curl -w '\\n' -H 'Authorization: #{@jwt_token}' #{request.base_url}#{most_purchased_products_by_each_category_api_reports_path}"
     }
   end
 end
