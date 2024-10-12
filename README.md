@@ -34,8 +34,11 @@ Los usuarios de prueba para acceder a la aplicación son:
 - john-client@email.com
 - dean-client@email.com
 
-
 Todos los usuarios tienen la contraseña 12345
+
+Los usuarios con -client son clientes y solo pueden comprar y ver sus compras
+
+Los usuarios con -admin son administradores y pueden ver todo
 
 Desde la aplicación sólo se pueden registrar usuarios de tipo cliente
 
@@ -52,6 +55,9 @@ una vista para ver esta información.
 El diagrama ER se encuentra en la carpeta doc
 
 En la sección reportes accediendo como usuario admin se muestran las instrucciones para comprobar la autenticación JWT.
+
+Como usuario admin, algunas filas del listado de ventas y productos están marcadas en celeste, esto indica que el producto
+en cuestión fue registrado por el usuario actual. Lo hice así para facilitar su identificación
 
 ## 1.2 Ejecución Local
 **Pre-requisitos**
