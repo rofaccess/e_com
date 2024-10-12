@@ -110,10 +110,12 @@ def create_sale_orders(quantity = 30)
 end
 
 # Create data
-create_users
+ActiveRecord::Base.transaction do
+  create_users
 
-create_product_categories(15) if ProductCategory.count.zero?
-create_products(50)
-create_product_product_categories if ProductProductCategory.count.zero?
+  create_product_categories(15) if ProductCategory.count.zero?
+  create_products(5)
+  create_product_product_categories if ProductProductCategory.count.zero?
 
-create_sale_orders(10)
+  # create_sale_orders(10)
+end

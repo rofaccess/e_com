@@ -5,11 +5,11 @@ module Api
       respond_to :json
 
       def index
-        respond_with ProductCategory.limit(2)
+        respond_with Product.includes(:created_by).limit(2)
       end
 
       def most_purchased_products_by_each_category
-        respond_with Reports::Products.most_purchased_by_each_category(params[:products_quantity])
+        respond_with Reports::ProductCategory.most_purchased_products(params[:products_limit])
       end
 
     end
