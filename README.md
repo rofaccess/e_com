@@ -17,7 +17,6 @@ Acceder a http://localhost:3000
 
 Ctrl + c para detener la aplicación en la Terminal.
 
-
 También se puede iniciar la aplicación en segundo plano
 ````sh
 $ docker-compose up dev -d
@@ -27,6 +26,32 @@ En este caso la aplicación se detiene con
 ````sh
 $ docker-compose down
 ````
+
+### Aclaraciones
+Los usuarios de prueba para acceder a la aplicación son:
+- amy-admin@email.com
+- bob-admin@email.com
+- john-client@email.com
+- dean-client@email.com
+
+
+Todos los usuarios tienen la contraseña 12345
+
+Desde la aplicación sólo se pueden registrar usuarios de tipo cliente
+
+Más usuarios de tipo admin deben agregarse en el seed en el método create_users
+
+Para el envío de email de primera compra se debe especificar SMPT_USER_NAME y SMPT_PASSWORD en caso de que se use gmail, 
+si se usa algún otro se debe cambiar el resto de las variables que empiezan con SMTP. También es necesario agregar al seed
+un email válido para los usuarios admin para que pueda recibirse el correo. De igual modo en el log de la aplicación se
+puede comprobar la construcción del email.
+
+La información de quienes crearon o actualizaron productos y categorias se guardan en la tabla versions. No se implementó
+una vista para ver esta información.
+
+El diagrama ER se encuentra en la carpeta doc
+
+En la sección reportes accediendo como usuario admin se muestran las instrucciones para comprobar la autenticación JWT.
 
 ## 1.2 Ejecución Local
 **Pre-requisitos**

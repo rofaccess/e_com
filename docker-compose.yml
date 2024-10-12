@@ -51,6 +51,7 @@ services:
       - SMPT_DOMAIN=${SMPT_DOMAIN}
       - SMPT_USER_NAME=${SMPT_USER_NAME}
       - SMPT_PASSWORD=${SMPT_PASSWORD}
+      - JWT_SECRET_TOKEN=${JWT_SECRET_TOKEN}
 
     ports:
       - "3000:3000" # Asigna el puerto 3000 del host al puerto 3000 del contenedor
@@ -84,6 +85,7 @@ services:
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - DATABASE_PORT=5432
       - DATABASE_HOST=postgres
+      - JWT_SECRET_TOKEN=${JWT_SECRET_TOKEN}
     ports:
       - "1235:1235"
     depends_on:
