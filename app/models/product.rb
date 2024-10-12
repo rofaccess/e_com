@@ -12,6 +12,8 @@ class Product < ActiveRecord::Base
   has_many :product_categories, through: :product_product_categories
   accepts_nested_attributes_for :product_categories, allow_destroy: true
 
+  default_scope order(:name)
+
   validates :name, presence: true
 
   delegate :name, :email, to: :created_by, prefix: true

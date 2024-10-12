@@ -87,7 +87,7 @@ RSpec.describe ProductsController, :type => :controller do
 
       it "redirects to the created product" do
         post :create, {:product => valid_attributes}
-        expect(response).to redirect_to(Product.last)
+        expect(response).to redirect_to(Product.reorder(:id).last)
       end
     end
 

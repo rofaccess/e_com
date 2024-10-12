@@ -24,6 +24,11 @@
           <%= @product.created_by_name %>
         </p>
 
+        <p>
+          <b>Categories:</b>
+          <%= @product.product_categories_list %>
+        </p>
+
         <div class="field is-grouped">
           <div class="control">
             <%= link_to '<- Back', products_path, class: "button" %>
