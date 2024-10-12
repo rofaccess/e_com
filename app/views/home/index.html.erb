@@ -1,11 +1,7 @@
 <h1 class="title">Available Products</h1>
 
 <div class="products-list">
-  <% @products.each do |product| %>
-    <div class="card product-item">
-      <%= render "product", product: product %>
-    </div>
-  <% end %>
+  <%= render partial: "product", collection: @products, as: :product %>
 </div>
 
 <% if @products.total_pages > 1  %>

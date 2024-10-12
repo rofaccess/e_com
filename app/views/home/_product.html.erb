@@ -1,38 +1,40 @@
-<div class="card-image">
-  <figure class="image is-4by3">
-    <%= render "products/show_image", product: product %>
-  </figure>
-</div>
-
-<div class="card-content">
-  <div>
-    <p class="subtitle is-4">
-      <%= product.name %>
-    </p>
-
-    <p>
-      <% product.product_categories.each do |category| %>
-        <span class="tag is-info is-light"><%= category.name %></span>
-      <% end %>
-    </p>
+<div class="card product-item">
+  <div class="card-image">
+    <figure class="image is-4by3">
+      <%= render "products/show_image", product: product %>
+    </figure>
   </div>
 
-  <div>
-    <p class="subtitle is-4 has-text-primary has-text-right">
-      <%= number_with_delimiter(product.price, delimiter: '.', separator: ',') %> $
-    </p>
+  <div class="card-content">
+    <div>
+      <p class="subtitle is-4">
+        <%= product.name %>
+      </p>
 
-    <% unless unlogged? %>
-      <% if logged_as_client? %>
-        <p class="control">
-          <%= render "place_purchase_form", product: product %>
-        </p>
+      <p>
+        <% product.product_categories.each do |category| %>
+          <span class="tag is-info is-light"><%= category.name %></span>
+        <% end %>
+      </p>
+    </div>
+
+    <div>
+      <p class="subtitle is-4 has-text-primary has-text-right">
+        <%= number_with_delimiter(product.price, delimiter: '.', separator: ',') %> $
+      </p>
+
+      <% unless unlogged? %>
+        <% if logged_as_client? %>
+          <p class="control">
+            <%= render "place_purchase_form", product: product %>
+          </p>
+        <% end %>
+        <% if logged_as_admin? %>
+          <div class="field is-grouped is-pulled-right">
+            <%= render "products/buttons", product: product %>
+          </div>
+        <% end %>
       <% end %>
-      <% if logged_as_admin? %>
-        <div class="field is-grouped is-pulled-right">
-          <%= render "products/buttons", product: product %>
-        </div>
-      <% end %>
-    <% end %>
+    </div>
   </div>
 </div>
