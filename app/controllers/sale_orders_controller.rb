@@ -5,7 +5,7 @@ class SaleOrdersController < ApplicationController
   # GET /sale_orders
   # GET /sale_orders.json
   def index
-    @sale_orders = SaleOrder.includes(:client, product: :created_by).order("sale_at DESC")
+    @sale_orders = SaleOrder.includes(:client, product: [:created_by, :product_categories]).order("sale_at DESC")
     @sale_orders = @sale_orders.where(client_id: current_user.id) if current_user.is_client?
     @sale_orders = @sale_orders.page(params[:page])
 
