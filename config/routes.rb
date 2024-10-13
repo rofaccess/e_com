@@ -11,6 +11,7 @@ App::Application.routes.draw do
       resources :reports, only: :index do
         collection do
           get :most_purchased_products_by_each_category
+          get :best_selling_products_by_each_category
         end
       end
     end
