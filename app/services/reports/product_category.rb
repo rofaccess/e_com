@@ -17,7 +17,7 @@ module Reports
       #     { ... }
       #   ]
       def most_purchased_products(products_limit)
-        products_limit = 2 if products_limit.blank?
+        products_limit = 1 if products_limit.blank?
 
         sql = <<-SQL
           WITH ranked_purchased_products_by_category AS (
@@ -32,16 +32,28 @@ module Reports
           )
           SELECT category_id AS id, category_name AS name, 
                  /*id AS product_id, name AS product_name, purchased_quantity,*/
-                 jsonb_agg(jsonb_build_object('id', id, 'name', name, 'purchased_quantity', purchased_quantity))::JSONB AS most_purchased_products 
+                 jsonb_agg(jsonb_build_object('id', id, 'name', name, 'purchased_quantity', purchased_quantity)) AS most_purchased_products 
           FROM ranked_purchased_products_by_category products
           WHERE rank <= ?
           GROUP BY category_id, category_name
         SQL
 
-        ActiveRecord::Base.connection.execute(
+        result = ActiveRecord::Base.connection.execute(
           ActiveRecord::Base.send(:sanitize_sql_array, [sql, products_limit])
         )
+
+        # Convert most_purchased_products in each result from JSON string to JSON
+        result.map do |row|
+          {
+            id: row['id'],
+            name: row['name'],
+            most_purchased_products: JSON.parse(row["most_purchased_products"]),
+          }
+        end
       end
+
+
+
     end
   end
 end

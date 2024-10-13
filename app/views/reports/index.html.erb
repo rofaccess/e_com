@@ -14,7 +14,8 @@
   <p>Default V2 API</p>
   <p><%= render "clipboard_field", value: @apis[:jwt_testing] %></p>
 
-  <h5>Most purchased products by category</h5>
+  <h5>Most purchased products by each category</h5>
+  <p>The url can receive products_limit param in url. Default value when not passed is 1. Format: url?products_limit=2</p>
   <p><%= render "clipboard_field", value: @apis[:most_purchased_products_by_each_category] %></p>
 
 </div>
