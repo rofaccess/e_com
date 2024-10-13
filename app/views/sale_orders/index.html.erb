@@ -11,6 +11,7 @@
       <th>Client</th>
       <th>Product</th>
       <th>Categories</th>
+      <th>Seller</th>
       <th class="has-text-right">Quantity</th>
       <th class="has-text-right">Price</th>
       <th class="has-text-right">Total</th>
@@ -24,6 +25,7 @@
         <td><%= sale_order.client_name %></td>
         <td><%= sale_order.product_name %></td>
         <td><%= sale_order.product.product_categories_list %></td>
+        <td><%= sale_order.product.created_by_name %></td>
         <td class="has-text-right"><%= number_with_delimiter(sale_order.quantity, delimiter: '.', separator: ',') %></td>
         <td class="has-text-right"><%= number_with_delimiter(sale_order.price, delimiter: '.', separator: ',') %></td>
         <td class="has-text-right"><%= number_with_delimiter(sale_order.total, delimiter: '.', separator: ',') %></td>

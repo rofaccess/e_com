@@ -135,6 +135,9 @@ $ docker-compose run --rm -p 3000:3000 dev /bin/bash
 - `rm`: el contenedor desaparece al salir del mismo.
 - `-p 3000:3000`: expone el puerto 3000 del contenedor al puerto 3000 del host.
 
+Desde el contenedor se puede ejecutar rails s lo cual es más útil para analizar los logs durante la ejecución
+y apagar y prender más rápido el servidor
+
 Ejecutar todos los tests dentro del contenedor
 ````sh
 $ rake spec

@@ -16,8 +16,8 @@ module Reports
       #     },
       #     { ... }
       #   ]
-      def most_purchased_products(products_limit)
-        products_limit = 1 if products_limit.blank?
+      def most_purchased_products(params)
+        products_limit = params[:products_limit].blank? ? 1 : params[:products_limit].to_i
 
         sql = <<-SQL
           WITH ranked_purchased_products_by_category AS (
@@ -52,8 +52,8 @@ module Reports
         end
       end
 
-      def best_selling_products(products_limit)
-        products_limit = 3 if products_limit.blank?
+      def best_selling_products(params)
+        products_limit = params[:products_limit].blank? ? 3 : params[:products_limit].to_i
 
         sql = <<-SQL
           WITH ranked_best_selling_products_by_category AS (

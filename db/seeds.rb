@@ -30,13 +30,22 @@ def aleatory_categories(max_quantity = 5)
 end
 
 def all_products
-  @_products ||= Product.all
+  @_all_products ||= Product.all
+end
+
+def all_products_count
+  @_all_products_count ||= all_products.count
+end
+
+def aleatory_product
+  @_client_users ||= User.only_clients
+  @_client_users_count ||= @_client_users.count
+  all_products[rand(all_products_count)]
 end
 
 def aleatory_products(max_quantity = 5)
-  @_products_count ||= all_products.count
   aleatory_quantity = rand(max_quantity)
-  (1..aleatory_quantity).map { |_|  all_products[rand(@_products_count)] }.uniq
+  (1..aleatory_quantity).map { |_|  all_products[rand(all_products_count)] }.uniq
 end
 
 # Users ----------------------------------------------------------------------------------------------------------------
@@ -71,13 +80,14 @@ def create_products(quantity = 20)
     { name: product_name, price: Faker::Commerce.price, created_by_id: aleatory_admin.id }
   end
 
-  Product.import products, on_duplicate_key_ignore: true
+  result = Product.import products, on_duplicate_key_ignore: true
+  Product.where(id: result.ids)
 end
 
 # Product - Product Categories -----------------------------------------------------------------------------------------
-def create_product_product_categories
-  product_product_categories = all_products.flat_map do |product|
-    aleatory_categories.map do |category|
+def create_product_product_categories(products, max_quantity = 5)
+  product_product_categories = products.flat_map do |product|
+    aleatory_categories(max_quantity).map do |category|
       { product_id: product.id, product_category_id: category.id }
     end
   end
@@ -92,11 +102,21 @@ def create_sale_orders(quantity = 30)
     SaleOrder.create_sale_number_counter
   end
 
-  sale_orders = aleatory_products(quantity).map do |product|
+  # Se crea un arreglo de fechas aleatorias en el rango de un año, las horas son aleatorias para tódo el día
+  # En vez de :all se puede indicar :morning si se quieren sólo horas por la mañana
+  sale_ats = (1..quantity).map do
+    Faker::Time.backward(365, :all)
+  end
+
+  # Se ordenan las fechas, esto es para que el numero de venta esté coherente con las fechas
+  sale_ats = sale_ats.sort
+
+  sale_orders = sale_ats.map do |sale_at|
     last_sale_number += 1
+    product = aleatory_product
     {
       sale_number: last_sale_number.to_s,
-      sale_at: Faker::Time.backward(30, :morning),
+      sale_at: sale_at,
       client_id: aleatory_client.id,
       product_id: product.id,
       quantity: Faker::Number.between(1, 100),
@@ -113,9 +133,17 @@ end
 ActiveRecord::Base.transaction do
   create_users
 
+  # En la primera ejecución del seed se crea la cantidad indicada pero en las siguientes ejecuciones ya no se crean
   create_product_categories(15) if ProductCategory.count.zero?
-  create_products(5)
-  create_product_product_categories if ProductProductCategory.count.zero?
 
-  # create_sale_orders(10)
+  # Se crean 50 productos por cada ejecución del seed
+  products = create_products(50)
+  # Se agregan de 1 a 5 categorias aleatorias a los productos creados
+  create_product_product_categories(products, 5)
+
+  # Se crean x ventas por cada ejecución del seed
+  # Solo en la primera ejecucion los sale_at y sale_number estarán sincronizados, pero a partir de las siguientes
+  # ya se verán raros, igual no es grave. Tener en cuenta que el seed se ejecuta cada vez que se levanta el contenedor
+  # aunque eso se puede quitar y ejecutar los seed manualmente enviando parametros al contenedor cuando sea necesario
+  create_sale_orders(20)
 end

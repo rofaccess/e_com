@@ -22,4 +22,9 @@
   <p>The url can receive products_limit param in url. Default value when not passed is 3. Format: url?products_limit=2</p>
   <p><%= render "clipboard_field", value: @apis[:best_selling_products_by_each_category] %></p>
 
+  <h5>Sale Orders</h5>
+  <p>The url must receive required param page and these optional params: rows_per_page, sale_at_from, sale_at_to, category_id, client_id, admin_id</p>
+  <p>rows_per_page default value is <%= ENV["REPORTS_ROW_PER_PAGE"] %></p>
+  <p><%= render "clipboard_field", value: @apis[:sale_orders_without_params] %></p>
+  <p><%= render "clipboard_field", value: @apis[:sale_orders_with_params] %></p>
 </div>
