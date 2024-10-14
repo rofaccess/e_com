@@ -1,8 +1,18 @@
 <h1 class="title">Available Products</h1>
 
-<div class="products-list">
-  <%= render partial: "product", collection: @products, as: :product %>
-</div>
+<% content_for :searcher do %>
+  <%= render "search", q: @q %>
+<% end %>
+
+<% if @products.first %>
+  <div class="products-list">
+    <%= render partial: "product", collection: @products, as: :product %>
+  </div>
+<% else %>
+  <div class="block">
+    <h2 class="subtitle">Products not found. Try other search params...</h2>
+  </div>
+<% end %>
 
 <% if @products.total_pages > 1  %>
   <%= render "layouts/pagination_navbar", records: @products %>

@@ -47,6 +47,10 @@
           <span><%= t('.reports') %></span>
         <% end %>
       <% end %>
+
+      <div class="navbar-item">
+        <%= yield(:searcher) %>
+      </div>
     </div>
 
     <div class="navbar-end">

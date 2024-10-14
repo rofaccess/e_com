@@ -104,3 +104,6 @@ gem "cocoon", "1.2.15"
 
 #  A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Ruby webapps. https://github.com/kaminari/kaminari/tree/v0.17.0
 gem 'kaminari'
+
+# Object-based searching. https://github.com/activerecord-hackery/ransack/tree/v1.8.4
+gem 'ransack', '1.8.4' # Última versión compatible con ruby 1.9.3
