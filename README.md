@@ -138,6 +138,13 @@ $ docker-compose run --rm -p 3000:3000 dev /bin/bash
 Desde el contenedor se puede ejecutar rails s lo cual es más útil para analizar los logs durante la ejecución
 y apagar y prender más rápido el servidor
 
+Ejecutar el seed manualmente (En el entrypoint ya se ejecuta, aunque posiblemente lo quite del entrypoint en algún momento)
+````sh
+$ docker-compose run --rm dev rake db:seed
+````
+- `rm`: el contenedor desaparece al salir del mismo.
+- `-p 3000:3000`: expone el puerto 3000 del contenedor al puerto 3000 del host.
+
 Ejecutar todos los tests dentro del contenedor
 ````sh
 $ rake spec
@@ -151,4 +158,11 @@ $ rspec spec/controllers/products_controller_spec.rb
 Ejecutar brakeman dentro del contenedor
 ````sh
 $ brakeman -o brakeman_results.html
+````
+
+Comprobar si redis se está ejecutando. Ver los logs de ejecución de servicios
+````sh
+$ docker-compose logs redis
+$ docker logs e_com-redis-1 # Alternativa
+$ docker-compose logs sidekiq
 ````

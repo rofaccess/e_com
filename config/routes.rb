@@ -1,4 +1,5 @@
 require "api/api_constraints"
+require "sidekiq/web"
 
 App::Application.routes.draw do
   resources :reports, only: :index
@@ -76,6 +77,18 @@ App::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'home#index'
+
+  # Cuando un usuario no está logueado, sidekiq trata de acceder a una ruta por defecto que no existe
+  # Cuando se hace petición a esa ruta, se redirecciona a la ruta válida para inicio de sesión
+  get '/sidekiq/users/sign_in', to: redirect('/users/sign_in')
+
+  authenticate :user, ->(user) { user.is_admin? } do
+    mount Sidekiq::Web, at: "/sidekiq", as: :sidekiq
+    # El as: :sidekiq es para usar la ruta sidekiq_path en el navbar
+  end
+
+  # Redirigir a los usuarios no administradores que intenten acceder a Sidekiq. by ChatGPT
+  get '/sidekiq', to: redirect('/'), constraints: ->(req) { req.env['warden'].user.present? && !req.env['warden'].user.is_admin? }
 
   # See how all your routes lay out with "rake routes"
 

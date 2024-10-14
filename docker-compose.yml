@@ -22,6 +22,9 @@ services:
       # Define la contraseña del superuser de PostgreSQL
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
+  redis:
+    image: redis
+
   dev:
     build: . # Construye en base al Dockerfile encontrado en el directorio donde se ejecuta docker-compose up
     # Para que command funcione, exec "$@" debe existir en el entrypoint o bien no se debe hacer referencia al entrypoint en el Dockerfile
@@ -53,14 +56,15 @@ services:
       - SMPT_PASSWORD=${SMPT_PASSWORD}
       - JWT_SECRET_TOKEN=${JWT_SECRET_TOKEN}
       - REPORTS_ROW_PER_PAGE=${REPORTS_ROW_PER_PAGE}
-
+      - REDIS_HOST=${REDIS_HOST}
     ports:
       - "3000:3000" # Asigna el puerto 3000 del host al puerto 3000 del contenedor
       - "1234:1234" # Puerto para depuración
-
     depends_on:
       - postgres  # Referencia al servicio postgres definido mas arriba, esto indica que se va a crear el servicio rails
       # luego del servicio postgres, aunque esto no asegura que postgres ya esté listo para ser usado por rails.
+      - redis
+      - sidekiq
 
   # Run in Terminal with: docker-compose run test or docker-compose exec app bundle exec rspec
   test:
@@ -88,10 +92,39 @@ services:
       - DATABASE_HOST=postgres
       - JWT_SECRET_TOKEN=${JWT_SECRET_TOKEN}
       - REPORTS_ROW_PER_PAGE=${REPORTS_ROW_PER_PAGE}
+      - REDIS_HOST=${REDIS_HOST}
     ports:
       - "1235:1235"
     depends_on:
       - postgres
+
+  sidekiq:
+    build: .
+    # Pasarle command funciona pero ejecutará también cualquier otro comando del entrypoint especificado en el archivo Dockerfile
+    # Estos otros comandos pueden no ser necesarios para este servicio, entonces conviene un entrypoint específico
+    # command: bundle exec sidekiq
+    # Es necesario especificar un entrypoint específico para sidekiq ya que en el entrypoint indicado en el Dockerfile compartido por los
+    # servicios dev y sidekiq ejecuta otras acciones como acceder a la base de datos, lo cual requiere pasarle las correspondientes variables
+    # de entorno aquí
+    entrypoint: ./sidekiq-entrypoint.sh
+    volumes:
+      - .:/app
+      - gem_cache:/usr/local/bundle/gems
+    env_file: .env
+    environment: # Realicé pruebas para pasarle específicamente las variables que necesita el contenedor, lo fácil sería pasarle las mismas variables de dev, pero con esto pretendo entender mejor como funciona cada cosa.
+       # Sidekiq al parecer carga las configuraciones de conexión de base de datos, por eso es necesario especifiar el port y el host correcto para que puede conectarse
+       # a la base de datos a pesar de que este contenedor realmente no va a usar la bd, ya que el servicio dev es el que usa la bd para realizar ciertas consultas en el contexto de la definición del worker
+       # El port se está cargando desde el archivo .env, pero el host debe ser postgres en el contexto de docker-compose y que en el .env está como localhost, lo cual es válido para ejecuciones locales y no funciona con esta orquestación de docker-compose
+      - DATABASE_HOST=postgres
+      #- REDIS_HOST=redis # o =${REDIS_HOST} Igual funciona sin esto, porque se esta cargando el valor del archivo .env, ahora, si el archivo .env no se copiara dentro del contenedor, entonces se debe indicar esta variable de entorno aquí
+      # Mientras investigaba sobre docker he visto que algunos ponían el archivo .env en el dockerignore, yo no lo hice por cuestiones prácticas. Aunque igual terminé indicando todas las variables de entorno en los otros servicios
+      # excepto acá, que solo indiqué las variables necesarias, si se borrara, el .env del contenedor entonces acá tendría que agregar tódo lo que falta
+      # Con tódo esto, ahora me doy cuenta que convendría tener un archivo .env específico para el docker-compose, algo como docker-compose.env
+    depends_on:
+      # si por algún motivo se levanta solo el contenedor de sidekiq, este intentará conectarse a postgres y a redis, para esos casos, se agregan las dependencias aquí
+      # si se ejecuta el servicio dev, entonces los siguientes no serían necesarios aquí porque dev ya los incluye, aunque el orden sería importante en dev indicando primero redis y postgres y luego sidekiq
+      - postgres
+      - redis
 
 volumes:
   db_pg_data:

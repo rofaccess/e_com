@@ -46,6 +46,13 @@
           </span>
           <span><%= t('.reports') %></span>
         <% end %>
+
+        <%= link_to sidekiq_path, class: "navbar-item", target: :_blank do %>
+          <span class="icon">
+            <i class="fas fa-people-arrows"></i>
+          </span>
+          <span>Sidekiq</span>
+        <% end %>
       <% end %>
 
       <div class="navbar-item">

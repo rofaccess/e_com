@@ -43,6 +43,12 @@ gem 'paperclip', '4.2.4'
 # Simple, efficient background processing for Ruby. https://github.com/sidekiq/sidekiq/tree/v2.17.8
 gem 'sidekiq', '2.17.8'
 
+# Required by sidekiq/web. Classy web-development dressed in a DSL (official / canonical repo). https://github.com/sinatra/sinatra/tree/v1.4.6
+gem 'sinatra', '1.4.6', require: false
+
+# Specific connection_pool version required to use sidekiq/web
+gem 'connection_pool', '2.1.0'
+
 # Required gems to debug specs in RubyMine using ruby 1.9.x
 gem 'ruby-debug-base19x', '0.11.32', require: false
 # An interface which glues ruby-debug to IDEs like Eclipse (RDT), NetBeans and RubyMine. https://github.com/ruby-debug/ruby-debug-ide/tree/master

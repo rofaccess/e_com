@@ -30,9 +30,10 @@ class PlacePurchase
   end
 
   def notify_first_purchase
-    recipient = product.created_by_email
-    cc_recipients = User.admin_emails(recipient)
-    Notifier.first_purchase_mail(recipient, cc_recipients, product.name).deliver
+    Rails.logger.debug("\nThis is a first purchase of '#{product.name}'. User '#{product.created_by_name}' will be notify via mail using Sidekiq worker\n")
+    # El correo se envía de forma asíncrona en otro hilo a través de Sidekiq. Si no se hace de esta manera
+    # se nota un retraso en la interfaz web justo antes de redireccionar a la página de compras luego de efectuar una compra.
+    FirstPurchaseMailWorker.perform_async(product.id)
   end
 
   def product_purchases_count
