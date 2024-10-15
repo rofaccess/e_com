@@ -14,9 +14,3 @@ Sidekiq::Cron::Job.create(
   cron: '0 10 * * *', # Expresión cron
   class: 'DailySaleOrdersReportWorker' # Nombre de la clase del worker a ejecutar
 )
-
-Sidekiq::Cron::Job.create(
-  name: 'Daily Sale Orders Report at 03:00 AM',
-  cron: '20 2 * * *', # Expresión cron
-  class: 'DailySaleOrdersReportWorker' # Nombre de la clase del worker a ejecutar
-)
