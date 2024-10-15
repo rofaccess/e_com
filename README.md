@@ -150,10 +150,14 @@ Ejecutar todos los tests dentro del contenedor
 $ rake spec
 ````
 
-Ejecutar un archivo de tests en particular dentro del contenedor
+Ejecutar un archivo de tests en particular dentro del contenedor.
 ````sh
-$ rspec spec/controllers/products_controller_spec.rb
+$ RAILS_ENV=test rspec spec/controllers/products_controller_spec.rb
+$ RAILS_ENV=test bundle exec rspec spec/controllers/products_controller_spec.rb # Alternativa
 ````
+Es importante indicar el environment en el contenedor de dev, porque osino realizará cambios en la base de datos de development
+rake spec no necesita que se le indique el environment
+Si fuera el contenedor de test no haría falta indicar el environment a rspec
 
 Ejecutar brakeman dentro del contenedor
 ````sh

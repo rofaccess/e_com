@@ -5,7 +5,23 @@ module Reports
     ROWS_PER_PAGE = ENV["REPORTS_ROW_PER_PAGE"].to_i # En vez de una variable de entorno, esto se puede guardar en una tabla de configuraciones
 
     class << self
-      def all(params)
+      # Return sale orders according params
+      # @param params [Hash] Filter values
+      # @param rows_per_page [Integer] A custom rows_per_page value to skip rows per page limit validation
+      # @return [Array] A array of sale orders
+      #
+      # @example Json result format
+      #   [
+      #     {
+      #       id: 1,
+      #       name: "Category Name",
+      #       most_purchased_products: [
+      #         { id: 1, name: "Product Name", purchased_quantity: 5 }
+      #       ]
+      #     },
+      #     { ... }
+      #   ]
+      def all(params, rows_per_page = nil)
         params = {
           page: params["page"].to_i,
           rows_per_page: params.fetch(:rows_per_page, ROWS_PER_PAGE).to_i,
@@ -22,7 +38,6 @@ module Reports
         # obtener los datos correctamente
         params[:sale_at_from] = Time.zone.parse(params[:sale_at_from]) if params[:sale_at_from]
         params[:sale_at_to] = Time.zone.parse(params[:sale_at_to]) if params[:sale_at_to]
-        puts params
 
         # Alternativa a params["client_id"].presence
         # - params["client_id"].blank? ? nil : params["client_id"]
@@ -32,6 +47,10 @@ module Reports
         params[:page] = 1 if params[:page].zero?
 
         validate_rows_per_page_limit(params[:rows_per_page])
+
+        # Use custom value received as second param in current method
+        # The second param rows_per_page is used to skip prev validation
+        params[:rows_per_page] = rows_per_page if rows_per_page
 
         sql = <<-SQL
           WITH filtered_sale_orders as (
@@ -62,7 +81,7 @@ module Reports
             GROUP BY filtered_sale_orders.product_id, filtered_sale_orders.id
           )
           /* Se realiza de vuelta un join final para obtener especificamente las columnas pertinentes y en el orden deseado */  
-          SELECT fso.id, fso.sale_number, fso.sale_at AT TIME ZONE 'UTC' AT TIME ZONE 'America/Santiago' AS sale_at, fso.client, fso.product_name, sowpc.categories, fso.admin, fso.quantity, fso.price, fso.total
+          SELECT fso.id, fso.sale_number, fso.sale_at AT TIME ZONE 'UTC' AT TIME ZONE 'America/Santiago' AS sale_at, fso.client, fso.product_name AS product, sowpc.categories, fso.admin, fso.quantity, fso.price, fso.total
           FROM filtered_sale_orders fso
           INNER JOIN sale_orders_with_product_categories sowpc ON sowpc.id = fso.id          
         SQL
@@ -84,6 +103,18 @@ module Reports
         ActiveRecord::Base.connection.execute(
           ActiveRecord::Base.send(:sanitize_sql_array, [sql, params])
         )
+      end
+
+      def sales_for_day(date, rows_per_page)
+        sale_at_from = date.beginning_of_day
+        sale_at_to = date.end_of_day
+        params = {
+          "page" => 1,
+          "sale_at_from" => sale_at_from.to_s,
+          "sale_at_to" => sale_at_to.to_s
+        }
+
+        Reports::SaleOrder.all(params, rows_per_page)
       end
 
       private

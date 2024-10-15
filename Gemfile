@@ -13,6 +13,9 @@ group :test do
 
   # Ruby JSON Schema Validator. https://github.com/voxpupuli/json-schema/tree/v2.6.2
   gem "json-schema", '2.6.2'
+
+  # RSpec for Sidekiq. https://github.com/wspurgin/rspec-sidekiq/tree/v3.1.0
+  gem 'rspec-sidekiq', '3.1.0'
 end
 
 group :development do
@@ -42,6 +45,15 @@ gem 'paperclip', '4.2.4'
 
 # Simple, efficient background processing for Ruby. https://github.com/sidekiq/sidekiq/tree/v2.17.8
 gem 'sidekiq', '2.17.8'
+
+# Scheduler / Cron for Sidekiq jobs. https://github.com/sidekiq-cron/sidekiq-cron/tree/v0.3.1
+gem 'sidekiq-cron', '0.3.1'
+
+# Set rufus-scheduler version to work with sidekiq-cron
+gem 'rufus-scheduler', '3.0.0'
+
+# Lightweight job scheduler extension for Sidekiq. https://www.rubydoc.info/gems/sidekiq-scheduler/0.7
+# gem 'sidekiq-scheduler', '0.7'
 
 # Required by sidekiq/web. Classy web-development dressed in a DSL (official / canonical repo). https://github.com/sinatra/sinatra/tree/v1.4.6
 gem 'sinatra', '1.4.6', require: false

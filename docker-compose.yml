@@ -79,7 +79,8 @@ services:
     # command: rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- bin/rspec spec/controllers/home_controller_spec.rb
     # command: rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- bin/rake spec
     # Depurar tests (alternativo): docker-compose up test
-    # command: bash -c "rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- bin/rspec spec/controllers/home_controller_spec.rb"
+    # command: bash -c "rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- bin/rspec spec/controllers/home_controller_spec.rb"
+    # command: bash -c "rdebug-ide --host 0.0.0.0 --port 1235 --dispatcher-port 26163 -- bin/rspec spec/workers/daily_report_worker_spec.rb:11"
     volumes:
       - .:/app
       - gem_cache:/usr/local/bundle/gems
@@ -106,6 +107,7 @@ services:
     # Es necesario especificar un entrypoint específico para sidekiq ya que en el entrypoint indicado en el Dockerfile compartido por los
     # servicios dev y sidekiq ejecuta otras acciones como acceder a la base de datos, lo cual requiere pasarle las correspondientes variables
     # de entorno aquí
+    # command: sidekiq -r ./app/workers/daily_sale_orders_report_worker.rb
     entrypoint: ./sidekiq-entrypoint.sh
     volumes:
       - .:/app

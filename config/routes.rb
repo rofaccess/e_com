@@ -1,5 +1,6 @@
 require "api/api_constraints"
 require "sidekiq/web"
+require "sidekiq/cron/web"
 
 App::Application.routes.draw do
   resources :reports, only: :index

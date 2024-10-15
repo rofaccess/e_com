@@ -26,3 +26,5 @@ DB_PORT=${DB_PORT:-5432}
 wait_for_db
 
 bundle exec sidekiq
+
+exec "$@"

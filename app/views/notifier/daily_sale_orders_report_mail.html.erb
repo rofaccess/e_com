@@ -1,0 +1,31 @@
+<h1 class="title"><%= @subject %></h1>
+
+<table class="table is-fullwidth is-hoverable">
+  <tr>
+    <th>#</th>
+    <th class="has-text-right">Number</th>
+    <th>Date</th>
+    <th>Client</th>
+    <th>Product</th>
+    <th>Categories</th>
+    <th>Created by</th>
+    <th class="has-text-right">Quantity</th>
+    <th class="has-text-right">Price</th>
+    <th class="has-text-right">Total</th>
+  </tr>
+
+  <% @sale_orders.each_with_index do |sale_order, index| %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td class="has-text-right"><%= sale_order["sale_number"] %></td>
+      <td><%= I18n.l(Time.zone.parse(sale_order["sale_at"]), format: :long) %></td>
+      <td><%= sale_order["client"] %></td>
+      <td><%= sale_order["product"] %></td>
+      <td><%= sale_order["categories"] %></td>
+      <td><%= sale_order["admin"] %></td>
+      <td class="has-text-right"><%= number_with_delimiter(sale_order["quantity"], delimiter: '.', separator: ',') %></td>
+      <td class="has-text-right"><%= number_with_delimiter(sale_order["price"], delimiter: '.', separator: ',') %></td>
+      <td class="has-text-right"><%= number_with_delimiter(sale_order["total"], delimiter: '.', separator: ',') %></td>
+    </tr>
+  <% end %>
+</table>
