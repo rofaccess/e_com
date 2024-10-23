@@ -28,6 +28,15 @@ COPY . .
 # no define un comando se ejecutará el CMD
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
+
+# Run and own only the runtime files as a non-root user for security
+# Esto también permite crear archivos desde dentro del contenedor y modificar estos archivos en el host
+# sin que den problemas de permisos que siempre requieren el cambio de los permisos en el host
+RUN groupadd --system --gid 1000 rails && \
+    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
+    chown -R rails:rails db #log tmp
+USER 1000:1000
+
 ENTRYPOINT ["entrypoint.sh"]
 
 # El contenedor ejecuta la aplicación
