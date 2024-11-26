@@ -1,7 +1,10 @@
 # ECom
-# 1. Ejecución
+# 1 Ejecución
 ## 1.1 Ejecución Docker
 Se recomienda ejecutar en un contenedor Docker. Esto evita tener que instalar y configurar manualmente la BD, Ruby, etc.
+
+Más información sobre el uso de Docker en [Docker Basics](doc/docker_basics.md) y [Docker Rails](doc/docker_rails.md).
+
 
 **Pre-requisitos**
 - Docker
@@ -27,7 +30,8 @@ En este caso la aplicación se detiene con
 $ docker-compose down
 ````
 
-### Aclaraciones
+## 1.2 Características del proyecto
+### 1.2.1 Usuarios
 Los usuarios de prueba para acceder a la aplicación son:
 - amy-admin@email.com
 - bob-admin@email.com
@@ -44,22 +48,36 @@ Desde la aplicación sólo se pueden registrar usuarios de tipo cliente
 
 Más usuarios de tipo admin deben agregarse en el seed en el método create_users
 
-Para el envío de email de primera compra se debe especificar SMPT_USER_NAME y SMPT_PASSWORD en caso de que se use gmail, 
+### 1.2.2 Envío de correo
+
+Cuando se realiza la primera compra de un producto, se envía un correo al administrador que registró el producto con copia
+a los otros administradores. Este correo se envía utilizando un proceso en segundo plano con sidekiq. Se utiliza sidekiq
+para evitar que un efecto de cuelgue al realizar la primera compra.
+
+Para el envío de email debe especificar SMPT_USER_NAME y SMPT_PASSWORD en caso de que se use gmail, 
 si se usa algún otro se debe cambiar el resto de las variables que empiezan con SMTP. También es necesario agregar al seed
 un email válido para los usuarios admin para que pueda recibirse el correo. De igual modo en el log de la aplicación se
 puede comprobar la construcción del email.
 
-La información de quienes crearon o actualizaron productos y categorias se guardan en la tabla versions. No se implementó
-una vista para ver esta información.
+### 1.2.3 Log de auditoría
+Se registra el administrador que crea o actualiza productos y categorías.
 
-El diagrama ER se encuentra en la carpeta doc
+Esta información se guarda en la tabla versions. No se implementó una vista para ver esta información.
+
+### 1.2.4 ER Diagram
+Se diseño un diagrama ER el cual se encuentra en la carpeta doc.
+
+### 1.2.5 Autenticación JWT
+Se usa JWT para autenticar a los usuarios administradores que se conectan a las APIs.
 
 En la sección reportes accediendo como usuario admin se muestran las instrucciones para comprobar la autenticación JWT.
 
+
+### 1.2.6 Otros
 Como usuario admin, algunas filas del listado de ventas y productos están marcadas en celeste, esto indica que el producto
 en cuestión fue registrado por el usuario actual. Lo hice así para facilitar su identificación
 
-## 1.2 Ejecución Local
+## 1.3 Ejecución Local
 **Pre-requisitos**
 - Ruby 1.9.3
 - PostgreSQL 9.6
