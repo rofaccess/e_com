@@ -317,12 +317,12 @@ services:
         # Sets the superuser password for PostgreSQL  
         POSTGRES_PASSWORD: postgres
     networks:
-	    - network1 # Referencia al network1 definido más abajo  
+        - network1 # Referencia al network1 definido más abajo  
 
 networks:
-	network1:
-		name: rails_postgres # Se usa el network creado anteriormente
-		external: true
+    network1:
+        name: rails_postgres # Se usa el network creado anteriormente
+        external: true
 
 volumes:  
   db_pg_data:

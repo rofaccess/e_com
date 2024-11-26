@@ -303,7 +303,7 @@ services:
     ports:  # Mapeo de puertos
       - "3001:3000"
     volumes:
-	  - .:/usr/src/app
+      - .:/usr/src/app
   redis:
     image: redis
 ````
