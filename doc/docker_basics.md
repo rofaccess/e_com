@@ -36,11 +36,21 @@ docker rm $(docker ps -a -q) # or docker container prune
 - `-q`: Lista los ids de los contenedores en ejecución sin mostrar más detalles.
 - `-a`: Lista los contenedores sin importar su estado, ya sea que estén en ejecución, detenidos o hayan fallado.
 
-Eliminar una imagen
+Eliminar una imágen
 > docker rmi <IMAGE_ID>
 
 Eliminar todas las imagenes
-> docker rmi $(docker images -q)
+````sh
+docker image prune
+docker rmi $(docker images -q) # Alternativa
+````
+
+Hay veces en que docker images no lista todas las imágenes, esto puede pasar porque las imagenes están guardadas en caché.
+Esto se puede verificar en el almacenamiento de Docker con
+> docker system df
+
+Luego, para limpiar el caché
+> docker system prune -a
 
 # Comandos útiles
 ## 1. docker run
