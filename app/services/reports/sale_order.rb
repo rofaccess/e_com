@@ -132,10 +132,11 @@ module Reports
            WHERE pc.id = :category_id OR :category_id IS NULL
            GROUP BY filtered_sale_orders.product_id, filtered_sale_orders.id
          )
-         SELECT CASE WHEN :granularity = 'day' THEN granularity
-                     WHEN :granularity = 'month' THEN granularity
-                     WHEN :granularity = 'year' THEN granularity
-                     ELSE granularity
+         SELECT CASE WHEN 'hour' = :granularity THEN TO_CHAR(granularity, 'YYYY-MM-DD HH24:00')
+                     WHEN 'day' = :granularity THEN TO_CHAR(granularity, 'YYYY-MM-DD')
+                     WHEN 'week' = :granularity THEN CONCAT('Week ', DATE_PART('week', granularity)::TEXT)
+                     WHEN 'year' = :granularity THEN TO_CHAR(granularity, 'YYYY')
+                     ELSE TO_CHAR(granularity, 'YYYY/MM/DD')
                 END AS granularity,
                 COUNT(fso.id)
          FROM filtered_sale_orders fso
@@ -145,9 +146,16 @@ module Reports
          ORDER BY granularity         
         SQL
 
-        ActiveRecord::Base.connection.execute(
+        result = ActiveRecord::Base.connection.execute(
           ActiveRecord::Base.send(:sanitize_sql_array, [sql, parsed_params])
         )
+
+        hash = {}
+        result.each do |row|
+          hash[row["granularity"]] = row["count"]
+        end
+
+        hash
       end
 
       private
@@ -181,7 +189,7 @@ module Reports
       end
 
       def validate_granularity(granularity)
-        raise ValidationError.new("The allowed values for the param granularity are day, month or year but the received value was '#{granularity}'") unless granularity.in?(%w{day month year})
+        raise ValidationError.new("The allowed values for the param granularity are hour, day, week or year but the received value was '#{granularity}'") unless granularity.in?(%w{hour day week year})
       end
 
     end

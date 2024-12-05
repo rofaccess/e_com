@@ -30,7 +30,7 @@
 
   <h5>Sale Orders quantity by granularity</h5>
   <p>The url must receive required param granularity and these optional params: sale_at_from, sale_at_to, category_id, client_id, admin_id</p>
-  <p>The granularity can be one of these values: day, month or year</p>
+  <p>The granularity can be one of these values: hour, day, week or year</p>
   <p><%= render "clipboard_field", value: @apis[:sale_orders_quantity_without_params] %></p>
   <p><%= render "clipboard_field", value: @apis[:sale_orders_quantity_with_params] %></p>
 </div>
