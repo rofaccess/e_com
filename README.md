@@ -1,4 +1,7 @@
+# ![ecom_logo.png](app/assets/images/ecom_logo.svg) 
+
 # ECom
+
 # 1 Ejecución
 ## 1.1 Ejecución Docker
 Se recomienda ejecutar en un contenedor Docker. Esto evita tener que instalar y configurar manualmente la BD, Ruby, etc.
@@ -107,7 +110,13 @@ curl -w '\n' -H 'Authorization: your_token' 'http://localhost:3000/api/reports/s
 
 ### 1.2.7 Otros
 Como usuario admin, algunas filas del listado de ventas y productos están marcadas en celeste, esto indica que el producto
-en cuestión fue registrado por el usuario actual. Lo hice así para facilitar su identificación
+en cuestión fue registrado por el usuario actual. De este modo se le facilita al administrador identificar las ventas de 
+los productos que registró.
+
+### 1.2.8 Pendientes
+- Agregar gema para medir la cobertura de specs.
+- Agregar mas specs.
+- Documentar las APIs usando Swagger.
 
 ## 1.3 Ejecución Local
 **Pre-requisitos**
