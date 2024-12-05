@@ -15,6 +15,7 @@ App::Application.routes.draw do
           get :most_purchased_products_by_each_category
           get :best_selling_products_by_each_category
           get :sale_orders
+          get :sale_orders_quantity
         end
       end
     end

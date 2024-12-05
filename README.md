@@ -72,8 +72,40 @@ Se usa JWT para autenticar a los usuarios administradores que se conectan a las 
 
 En la sección reportes accediendo como usuario admin se muestran las instrucciones para comprobar la autenticación JWT.
 
+### 1.2.6 APIs
+Se implementaron algunas APIs. 
+Cada API recibe parámetros para limitar el resultado.
+Para acceder a las Apis se debe pasarle un token de autenticación JWT a la petición.
+Este token se construye en base al id del usuario y un token guardado en el archivo .env.
+Se puede ver el listado de APIs disponibles accediendo a http://localhost:3000/reports. En esta pantalla también se
+muestra el token en base al usuario admin logueado. En esta pantalla también se especifican los parámetros permitidos
+para cada API.
 
-### 1.2.6 Otros
+**Obs.:** No se implementó un API para obtener el token de autorización. Para obtener el token hay que loguearse a la
+aplicación como usuario admin y acceder a la sección Reports.
+
+Apis Implementadas:
+1. Obtener los productos más comprados por cada categoría
+````sh
+curl -w '\n' -H 'Authorization: your_token' 'http://localhost:3000/api/reports/most_purchased_products_by_each_category'
+````
+
+2. Obtener los 3 productos que más han recaudado por categoría
+````sh
+curl -w '\n' -H 'Authorization: your_token' 'http://localhost:3000/api/reports/best_selling_products_by_each_category'
+````
+
+3. Obtener listado de ventas
+````sh
+curl -w '\n' -H 'Authorization: your_token' 'http://localhost:3000/api/reports/sale_orders?page=1'
+````
+
+4. Obtener cantidad de ventas por día, mes o año.
+````sh
+curl -w '\n' -H 'Authorization: your_token' 'http://localhost:3000/api/reports/sale_orders_quantity?granularity=year'
+````
+
+### 1.2.7 Otros
 Como usuario admin, algunas filas del listado de ventas y productos están marcadas en celeste, esto indica que el producto
 en cuestión fue registrado por el usuario actual. Lo hice así para facilitar su identificación
 
