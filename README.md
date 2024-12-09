@@ -114,9 +114,7 @@ en cuestión fue registrado por el usuario actual. De este modo se le facilita a
 los productos que registró.
 
 ### 1.2.8 Pendientes
-- Agregar gema para medir la cobertura de specs.
-- Agregar mas specs.
-- Documentar las APIs usando Swagger.
+- Aumentar la cobertura de tests agregando specs a las APIs.
 
 ## 1.3 Ejecución Local
 **Pre-requisitos**
@@ -221,6 +219,11 @@ Si fuera el contenedor de test no haría falta indicar el environment a rspec
 Ejecutar brakeman dentro del contenedor
 ````sh
 $ brakeman -o brakeman_results.html
+````
+
+Generar documentación swagger dentro del contenedor
+````sh
+$ rake swagger:docs
 ````
 
 Comprobar si redis se está ejecutando. Ver los logs de ejecución de servicios

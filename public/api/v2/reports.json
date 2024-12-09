@@ -1,0 +1,244 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "http://localhost:3000",
+  "resourcePath": "reports",
+  "apis": [
+    {
+      "path": "/api/reports/most_purchased_products_by_each_category.json",
+      "operations": [
+        {
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "products_limit",
+              "type": "integer",
+              "description": "Limit the most purchased products to show in each category. Default value is 1",
+              "required": false
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "JWT Token decode error"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Invalid JWT Token"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "User authorization fails"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Authorization header is missing"
+            }
+          ],
+          "summary": "Fetches most purchases products by each category",
+          "notes": "Url format example: url?products_limit=2",
+          "nickname": "Api::V2::Reports#most_purchased_products_by_each_category",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/reports/best_selling_products_by_each_category.json",
+      "operations": [
+        {
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "products_limit",
+              "type": "integer",
+              "description": "Limit the best selling products to show in each category. Default value is 3",
+              "required": false
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "JWT Token decode error"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Invalid JWT Token"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "User authorization fails"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Authorization header is missing"
+            }
+          ],
+          "summary": "Fetches best selling products by each category",
+          "notes": "Url format example: url?products_limit=2",
+          "nickname": "Api::V2::Reports#best_selling_products_by_each_category",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/reports/sale_orders.json",
+      "operations": [
+        {
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "page",
+              "type": "integer",
+              "description": "The page number to return. Default 1",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "rows_per_page",
+              "type": "integer",
+              "description": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "sale_at_from",
+              "type": "string",
+              "description": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "sale_at_to",
+              "type": "string",
+              "description": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "category_id",
+              "type": "integer",
+              "description": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "client_id",
+              "type": "integer",
+              "description": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "admin_id",
+              "type": "integer",
+              "description": null,
+              "required": false
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 400,
+              "responseModel": null,
+              "message": "The application raise Reports::SaleOrder::ValidationError Exception"
+            },
+            {
+              "code": 500,
+              "responseModel": null,
+              "message": "The application raise StandardError Exception. Msg: 'Error Interno en el Servidor. Contacte a Soporte Tecnico'"
+            }
+          ],
+          "summary": "Fetches sale orders",
+          "notes": "Return sale orders list according query params",
+          "nickname": "Api::V2::Reports#sale_orders",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/reports/sale_orders_quantity.json",
+      "operations": [
+        {
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "granularity",
+              "type": "string",
+              "description": "The granularity can be one of these values: hour, day, week or year",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "sale_at_from",
+              "type": "string",
+              "description": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "sale_at_to",
+              "type": "string",
+              "description": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "category_id",
+              "type": "integer",
+              "description": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "client_id",
+              "type": "integer",
+              "description": null,
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "admin_id",
+              "type": "integer",
+              "description": null,
+              "required": false
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 400,
+              "responseModel": null,
+              "message": "The application raise Reports::SaleOrder::ValidationError Exception"
+            },
+            {
+              "code": 500,
+              "responseModel": null,
+              "message": "The application raise StandardError Exception. Msg: 'Error Interno en el Servidor. Contacte a Soporte Tecnico'"
+            }
+          ],
+          "summary": "Fetches sale orders quantity by granularity",
+          "notes": "Return sale orders quantity according granularity",
+          "nickname": "Api::V2::Reports#sale_orders_quantity",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/reports.json",
+      "operations": [
+        {
+          "summary": "Get last two product items",
+          "nickname": "Api::V2::Reports#index",
+          "method": "get"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

@@ -32,7 +32,7 @@ module Reports
         # Lo siguientes son por si a alguien se le ocurre pasar cero o string vació lo cual causaría un error
         parsed_params[:rows_per_page] = DEFAULT_ROWS_PER_PAGE if parsed_params[:rows_per_page].zero?
         parsed_params[:page] = 1 if parsed_params[:page].zero?
-        puts parsed_params
+
         validate_rows_per_page_limit(parsed_params[:rows_per_page])
 
         # Use custom value received as second param in current method
