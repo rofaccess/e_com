@@ -18,6 +18,8 @@ App::Application.routes.draw do
           get :sale_orders_quantity
         end
       end
+
+      get '/users/authorization_token', to: 'users#authorization_token'
     end
   end
 

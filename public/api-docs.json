@@ -6,6 +6,10 @@
     {
       "path": "/api/v2/reports.{format}",
       "description": "Report Management"
+    },
+    {
+      "path": "/api/v2/users.{format}",
+      "description": "User Management"
     }
   ],
   "authorizations": null,
