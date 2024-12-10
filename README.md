@@ -74,6 +74,7 @@ Se diseño un diagrama ER el cual se encuentra en la carpeta doc.
 Se usa JWT para autenticar a los usuarios administradores que se conectan a las APIs.
 
 En la sección reportes accediendo como usuario admin se muestran las instrucciones para comprobar la autenticación JWT.
+Desde swagger-ui también se puede ver las documentaciones de las APIs accediendo a http://localhost:3000/api
 
 ### 1.2.6 APIs
 Se implementaron algunas APIs. 
@@ -84,26 +85,28 @@ Se puede ver el listado de APIs disponibles accediendo a http://localhost:3000/r
 muestra el token en base al usuario admin logueado. En esta pantalla también se especifican los parámetros permitidos
 para cada API.
 
-**Obs.:** No se implementó un API para obtener el token de autorización. Para obtener el token hay que loguearse a la
-aplicación como usuario admin y acceder a la sección Reports.
-
 Apis Implementadas:
-1. Obtener los productos más comprados por cada categoría
+1. Obtener token JWT de autorización
+````sh
+curl -w '\n' 'http://localhost:3000/api/users/authorization_token.json?email=amy-admin%40email.com&password=12345'
+````
+
+2. Obtener los productos más comprados por cada categoría
 ````sh
 curl -w '\n' -H 'Authorization: your_token' 'http://localhost:3000/api/reports/most_purchased_products_by_each_category'
 ````
 
-2. Obtener los 3 productos que más han recaudado por categoría
+3. Obtener los 3 productos que más han recaudado por categoría
 ````sh
 curl -w '\n' -H 'Authorization: your_token' 'http://localhost:3000/api/reports/best_selling_products_by_each_category'
 ````
 
-3. Obtener listado de ventas
+4. Obtener listado de ventas
 ````sh
 curl -w '\n' -H 'Authorization: your_token' 'http://localhost:3000/api/reports/sale_orders?page=1'
 ````
 
-4. Obtener cantidad de ventas por día, mes o año.
+5. Obtener cantidad de ventas por día, mes o año.
 ````sh
 curl -w '\n' -H 'Authorization: your_token' 'http://localhost:3000/api/reports/sale_orders_quantity?granularity=year'
 ````
@@ -112,8 +115,11 @@ curl -w '\n' -H 'Authorization: your_token' 'http://localhost:3000/api/reports/s
 Las APIs se documentarón usando Swagger 1.2. También se agregó swagger-ui el cual es accesible en
 http://localhost:3000/api
 
-Se debe indicar el token de autorización para probar las peticiones desde swagger-ui. Este token se obtiene logueandose
-como usuario admin en la app y accediendo a http://localhost:3000/reports
+Se debe indicar el token de autorización para probar las peticiones desde swagger-ui. 
+
+Este token se puede obtener de dos formas:
+- Realizando la petición al endpoint /api/users/authorization_token.json desde swagger-ui
+- Logueandose como usuario admin en la app y accediendo a http://localhost:3000/reports
 
 ### 1.2.8 Otros
 Como usuario admin, algunas filas del listado de ventas y productos están marcadas en celeste, esto indica que el producto
