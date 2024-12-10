@@ -11,6 +11,7 @@ module Api
 
       swagger_api :index do
         summary "Get last two product items"
+        param :header, 'Authorization', :string, :required, 'Authorization token'
       end
       def index
         respond_with Product.includes(:created_by).limit(2)
@@ -19,6 +20,7 @@ module Api
       swagger_api :most_purchased_products_by_each_category do
         summary "Fetches most purchases products by each category"
         notes "Url format example: url?products_limit=2"
+        param :header, 'Authorization', :string, :required, 'Authorization token'
         param :query, :products_limit, :integer, :optional, "Limit the most purchased products to show in each category. Default value is 1"
       end
       def most_purchased_products_by_each_category
@@ -28,6 +30,7 @@ module Api
       swagger_api :best_selling_products_by_each_category do
         summary "Fetches best selling products by each category"
         notes "Url format example: url?products_limit=2"
+        param :header, 'Authorization', :string, :required, 'Authorization token'
         param :query, :products_limit, :integer, :optional, "Limit the best selling products to show in each category. Default value is 3"
       end
       def best_selling_products_by_each_category
@@ -37,6 +40,7 @@ module Api
       swagger_api :sale_orders do |api|
         summary "Fetches sale orders"
         notes "Return sale orders list according query params"
+        param :header, 'Authorization', :string, :required, 'Authorization token'
         ReportsController::add_common_params(api)
         param :query, :page, :integer, :required, "The page number to return. Default 1"
         param :query, :rows_per_page, :integer, :optional
@@ -54,6 +58,7 @@ module Api
       swagger_api :sale_orders_quantity do |api|
         summary "Fetches sale orders quantity by granularity"
         notes "Return sale orders quantity according granularity"
+        param :header, 'Authorization', :string, :required, 'Authorization token'
         ReportsController::add_common_params(api)
         param :query, :granularity, :string, :required, "The granularity can be one of these values: hour, day, week or year"
         param :query, :sale_at_from, :string, :optional

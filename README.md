@@ -108,12 +108,19 @@ curl -w '\n' -H 'Authorization: your_token' 'http://localhost:3000/api/reports/s
 curl -w '\n' -H 'Authorization: your_token' 'http://localhost:3000/api/reports/sale_orders_quantity?granularity=year'
 ````
 
-### 1.2.7 Otros
+### 1.2.7 Documentación Swagger
+Las APIs se documentarón usando Swagger 1.2. También se agregó swagger-ui el cual es accesible en
+http://localhost:3000/api
+
+Se debe indicar el token de autorización para probar las peticiones desde swagger-ui. Este token se obtiene logueandose
+como usuario admin en la app y accediendo a http://localhost:3000/reports
+
+### 1.2.8 Otros
 Como usuario admin, algunas filas del listado de ventas y productos están marcadas en celeste, esto indica que el producto
 en cuestión fue registrado por el usuario actual. De este modo se le facilita al administrador identificar las ventas de 
 los productos que registró.
 
-### 1.2.8 Pendientes
+### 1.2.9 Pendientes
 - Aumentar la cobertura de tests agregando specs a las APIs.
 
 ## 1.3 Ejecución Local

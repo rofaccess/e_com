@@ -10,6 +10,13 @@
         {
           "parameters": [
             {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization token",
+              "required": true
+            },
+            {
               "paramType": "query",
               "name": "products_limit",
               "type": "integer",
@@ -52,6 +59,13 @@
         {
           "parameters": [
             {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization token",
+              "required": true
+            },
+            {
               "paramType": "query",
               "name": "products_limit",
               "type": "integer",
@@ -93,6 +107,13 @@
       "operations": [
         {
           "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization token",
+              "required": true
+            },
             {
               "paramType": "query",
               "name": "page",
@@ -168,6 +189,13 @@
         {
           "parameters": [
             {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization token",
+              "required": true
+            },
+            {
               "paramType": "query",
               "name": "granularity",
               "type": "string",
@@ -233,6 +261,15 @@
       "path": "/api/reports.json",
       "operations": [
         {
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "Authorization token",
+              "required": true
+            }
+          ],
           "summary": "Get last two product items",
           "nickname": "Api::V2::Reports#index",
           "method": "get"

@@ -30,7 +30,9 @@ module Api
       def setup_basic_api_documentation
         [:most_purchased_products_by_each_category, :best_selling_products_by_each_category, :sale_orders, :sale_orders_quantity].each do |api_action|
           swagger_api api_action do
+            # Lo siguiente no funciona, es decir, no se agrega
             param :header, 'Authorization', :string, :required, 'Authorization token'
+            # Al repetir :unauthorized, sólo se muestra el último en swagger-ui
             response :unauthorized, "JWT Token decode error"
             response :unauthorized, "Invalid JWT Token"
             response :unauthorized, "User authorization fails"
